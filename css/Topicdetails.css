@@ -1,0 +1,196 @@
+html {
+	background-color: #f4f5f9;
+}
+
+.tab {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 0.98rem;
+	border-top: 0.01rem solid rgba(228, 228, 228, 1);
+	background-color: rgba(255, 255, 255, 1)
+}
+
+.tab li {
+	width: 33.33%;
+	height: 0.4rem;
+	margin-top: 0.29rem;
+	float: left;
+	box-sizing: border-box;
+	border-right: 1px solid rgba(228, 228, 228, 1);
+}
+
+.tab li:last-of-type {
+	border: none;
+}
+
+.tab_logo {
+	width: 0.27rem;
+	height: 0.28rem;
+	/*background-color: red;*/
+	margin-top: 0.05rem;
+	margin-left: 0.46rem;
+	float: left;
+}
+
+.tab_title {
+	display: block;
+	font-size: 0.3rem;
+	font-family: PingFangSC-Light;
+	color: rgba(51, 51, 51, 1);
+	line-height: 0.4rem;
+	margin-left: 0.12rem;
+	float: left;
+}
+
+.content_title {
+	width: 6.84rem;
+	padding: 0.42rem 0.33rem 0.42rem 0.33rem;
+	background-color: white;
+}
+
+.content_title h4 {
+	font-size: 0.36rem;
+	font-family: PingFangSC-Light;
+	color: rgba(51, 51, 51, 1);
+}
+
+.content_res {
+	margin-top: 0.39rem;
+	font-size: 0.26rem;
+	font-family: PingFangSC-Light;
+	color: rgba(153, 153, 153, 1);
+}
+
+.content_res span {
+	margin-right: 0.2rem;
+}
+
+.content_res span:last-of-type {
+	margin: 0;
+}
+
+.Liveintroduction {
+	margin-top: 0.16rem;
+	width: 6.84rem;
+	padding: 0.29rem 0.33rem 0.49rem 0.33rem;
+	background-color: white;
+}
+
+.Liveintroduction h4 {
+	font-size: 0.32rem;
+	font-family: PingFangSC-Light;
+	color: rgba(51, 51, 51, 1);
+}
+
+.Liveintroduction p {
+	margin-top: 0.21rem;
+	font-size: 0.3rem;
+	font-family: PingFangSC-Light;
+	color: rgba(102, 102, 102, 1);
+}
+
+.PushStreamAddress {
+	margin-top: 0.16rem;
+	width: 6.84rem;
+	padding: 0.3rem 0.33rem 0.3rem 0.33rem;
+	background-color: white;
+}
+
+.PushStreamAddress h4 {
+	font-size: 0.32rem;
+	font-family: PingFangSC-Light;
+	color: rgba(51, 51, 51, 1);
+}
+
+.PushStreamAddress h4 span {
+	font-size: 0.26rem;
+	float: right;
+	color: rgba(153, 153, 153, 1);
+	font-family: PingFangSC-Light;
+	font-weight: normal;
+}
+
+.adder {
+	/*width: 6.rem;*/
+	margin-top: 0.19rem;
+	padding: 0.23rem 0.19rem 0.21rem 0.17rem;
+	box-sizing: border-box;
+	border: 0.01rem solid rgba(228, 228, 228, 1);
+	border-radius: 0.05rem;
+}
+
+.adder_btn {
+	overflow: hidden;
+	margin-top: 0.18rem;
+}
+
+.adder_btn p {
+	font-size: 0.26rem;
+	font-family: PingFangSC-Light;
+	color: rgba(75, 156, 241, 1);
+	display: block;
+	margin-left: 3.29rem;
+	float: left;
+}
+
+.adder_btn_logo {
+	width: 0.24rem;
+	height: 0.14rem;
+	float: left;
+	margin-left: 0.13rem;
+	margin-top: 0.05rem;
+}
+
+.mask {
+	display: none;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	background-color: rgba(0, 0, 0, .5)
+}
+
+.mask_main {
+	width: 6.26rem;
+	height: 3.07rem;
+	background-color: rgba(255, 255, 255, 1);
+	z-index: 1;
+	border-radius: 0.2rem;
+	margin: 0 auto;
+	margin-top: 5rem;
+	overflow: hidden;
+}
+
+.mask_title {
+	height: 0.91rem;
+	width: 100%;
+	background-color: rgba(75, 156, 241, 1);
+	font-size: 0.32rem;
+	font-family: PingFangSC-Light;
+	color: rgba(254, 254, 254, 1);
+	line-height: 0.91rem;
+	text-align: center
+}
+
+.mask_vie {
+	font-size: 0.32rem;
+	font-family: PingFangSC-Light;
+	color: rgba(102, 102, 102, 1);
+	line-height: 1rem;
+	text-align: center;
+	height: 1rem;
+	width: 100%;
+	border-bottom: 0.01rem solid rgba(204, 204, 204, 1);
+}
+
+.mask_mic {
+	font-size: 0.32rem;
+	font-family: PingFangSC-Light;
+	color: rgba(102, 102, 102, 1);
+	line-height: 1rem;
+	text-align: center;
+	height: 1rem;
+	width: 100%;
+}
+

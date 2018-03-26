@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<link rel="stylesheet" type="text/css" href="../css/init.css" />
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../css/headandfoot.css" />
+
+	<link rel="stylesheet" type="text/css" href="../css/gaiphone.css" />
+	<link rel="stylesheet" type="text/css" href="../css/content_head.css" />
+	<script src="../script/fontsize.js" type="text/javascript" charset="utf-8"></script>
+	<title>推流设置</title>
+</head>
+<body>
+	<header id="header" class='head'>
+		<div class="head_left" onclick="api.closeWin()"> <img src="../image/nav_icon1@2x.png" /></div>
+		<span class="title" id="topHeader">推流</span>
+	</header>
+
+		<div class="content_head">
+			<input type="" name="" id="" value="" placeholder="输入推流地址" />
+		</div>
+		<div class="content_main">
+			<div class="content_main_top">
+				<div class="top_item">
+					流畅
+				</div>
+				<div class="top_item">
+					标清
+				</div>
+				<div class="top_item top_item_active">
+					高清
+				</div>
+				<div class="top_item">
+					超清
+				</div>
+			</div>
+			<div class="content_main_center">
+				<p class="content_main_center_title">
+					初始码率
+				</p>
+				<div class="content_main_center_main">
+					<div class="content_ent">
+
+					</div>
+				</div>
+				<p class="content_main_center_mintitle">
+					800
+				</p>
+			</div>
+			<div class="content_main_top" style="margin-top: 0.2rem;">
+				<p class="content_hz">
+					画质
+				</p>
+				<div class="bottom_item ">
+					240p
+				</div>
+				<div class="bottom_item">
+					360p
+				</div>
+				<div class="bottom_item bottom_item_active">
+					480p
+				</div>
+				<div class="bottom_item">
+					720p
+				</div>
+			</div>
+		</div>
+		<div class="complete">
+			完成
+		</div>
+
+	<div class="mask" style="display: none;">
+		<div class="mask_main">
+			<div class="mask_main_head">
+				请选择推流方式
+			</div>
+			<div class="mask_main_item" style="box-sizing: border-box;border-bottom:0.01rem solid rgba(204,204,204,1);">
+				新版推流
+			</div>
+			<div class="mask_main_item">
+				新版推流
+			</div>
+		</div>
+	</div>
+</body>
+<script src="../script/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../script/api.js"></script>
+<script type="text/javascript">
+apiready = function(){
+	var  header = $api.byId('header');
+	$api.fixStatusBar(header);
+
+}
+
+</script>
+
+</html>

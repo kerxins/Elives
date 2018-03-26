@@ -1,0 +1,44 @@
+.content_main{
+	width: 100%;
+	overflow: hidden;
+	background-color: white;
+}
+.content_main li{
+	/*width: 100%;*/
+	width: 6.68rem;
+	padding: 0.29rem 0.41rem 0.32rem 0.41rem;
+	overflow: hidden;
+	border-bottom:0.01rem solid rgba(228,228,228,1);
+}
+.item_logo{
+	width: 1.39rem;
+	height: 1.39rem;
+	float: left;
+	/*background-color: red;*/
+	border-radius:50%;
+	overflow: hidden;
+}
+.item_res{
+	float: left;
+	width:4.8rem;
+	height:1.39rem;
+	margin-left: .37rem;
+	/*background-color: blue;*/
+}
+.item_res h4{
+	font-size:0.32rem;
+font-family:PingFangSC-Light;
+color:rgba(51,51,51,1);
+line-height:0.32rem;
+margin-top: 0.23rem;
+}
+.describe{
+	font-size:0.26rem;
+font-family:PingFangSC-Light;
+color:rgba(153,153,153,1);
+line-height:0.26rem;
+margin-top: 0.25rem;
+overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
+}

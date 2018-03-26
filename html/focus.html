@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" type="text/css" href="../css/init.css" />
+		<link rel="stylesheet" type="text/css" href="../css/headandfoot.css" />
+		<link rel="stylesheet" type="text/css" href="../css/fous.css"/>
+		<link rel="stylesheet" href="../css/api.css">
+		<script src="../script/fontsize.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+			#header {
+				height: 0.88rem;
+				background-color: rgba(75, 156, 241, 1);
+				padding: 0 0.32rem;
+				text-align: center;
+				font-size: 0.36rem;
+				color: #FFF;
+				line-height: 0.88rem;
+			}
+			img {
+				font-size: 0;
+			}
+			.head_left {
+				float: left;
+				margin: 0;
+			}
+		</style>
+	</head>
+
+	<body style="background-color:#F4F5F9;">
+
+			<header id="header">
+				<div class="head_left" onclick="api.closeWin()"> <img src="../image/nav_icon1@2x.png" /></div>
+				<span class="title" id="topHeader">关注直播间</span>
+			</header>
+			<ul class="content_main" id="content_list">
+					<li>
+						<div class="item_logo">
+							<img src="../image/tmp5.png"/>
+						</div>
+						<div class="item_res">
+							<h4>张三的直播间</h4>
+							<p class="describe">
+								张三的直播间介绍张三的直播间介绍张三的直播间介绍
+							</p>
+						</div>
+					</li>
+			</ul>
+	</body>
+	<script src="../script/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/api.js"></script>
+	<script type="text/javascript">
+		apiready = function(){
+			var header = $api.byId('header');
+			$api.fixStatusBar(header);
+			type = api.pageParam.name;
+			topHeader = type=='focus'?'关注直播间':type=='history'?'历史浏览':'';
+			$api.byId('topHeader').innerHTML = topHeader;
+			liveItems();
+		}
+		var type,url,topHeader;
+		function liveItems(){
+			if(type=='focus'){
+				url = 'http://live.bronet.cn/api/user/userinfo/getAttention';
+			}else{
+				url = 'http://live.bronet.cn/api/user/userinfo/getHistory';
+			}
+			var params = { id : $api.getStorage('id')};
+			var html = '';
+			$api.ajaxsend(url,params,function(res){
+				if(res.msg == 'success'){
+					var data = res.data;
+					data.forEach(function(el,index){
+						var more = $api.strToJson(el.more);
+						html+='<li>';
+						html+='<div class="item_logo">';
+						html+='<img src="'+ baseUrl +'/upload/'+more.thumbnail+'"/>';
+						html+='</div>';
+						html+='<div class="item_res">';
+						html+='<h4>'+ el.post_title +'</h4>';
+						html+='<p class="describe">'+ el.post_excerpt +'</p>';
+						html+='</div>';
+						html+='</li>';
+					})
+					$api.byId('content_list').innerHTML = html;
+				}else{
+					alert(res.msg)
+				}
+			})
+		}
+	</script>
+</html>

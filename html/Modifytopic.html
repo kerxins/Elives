@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" type="text/css" href="../css/init.css" />
+		<link rel="stylesheet" type="text/css" href="../css/headandfoot.css" />
+		<link rel="stylesheet" type="text/css" href="../css/index.css" />
+		<link rel="stylesheet" type="text/css" href="../css/Modifytopic.css" />
+		<link rel="stylesheet" type="text/css" href="../css/mui.css" />
+		<script src="../script/mui.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+		<script src="../script/fontsize.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../script/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<title>修改话题</title>
+	</head>
+
+	<body>
+		<div class="wrap">
+			<div class="head">
+				<div class="head_left">
+					<a href="#" onclick="javascript:history.back(-1);"><img src="../image/nav_icon1@2x.png" /></a>
+					
+				</div>
+				<div class="head_right">
+					创建话题
+				</div>
+				<div class="head_share">
+
+				</div>
+			</div>
+			<div class="content">
+				<div class="banner">
+					<img src="../image/cjht_pic@2x.png" />
+				</div>
+				<div class="main_res">
+					<ul class="main">
+					<li class="item">
+						<div class="item_left">
+							<p class="item_title">本期话题</p>
+							<p class="item_mintitle">测试</p>
+						</div>
+						<img src="../image/list_icon@2x.png" / class="item_right">
+
+					</li>
+					<li class="item">
+						<div class="item_left">
+							<p class="item_title">直播介绍</p>
+							<p class="item_mintitle">直播app</p>
+						</div>
+						<img src="../image/list_icon@2x.png" / class="item_right">
+
+					</li>
+					<li class="item">
+						<div class="item_left">
+							<p class="item_title">选择时间</p>
+							<p class="item_mintitle"></p>
+						</div>
+						<img src="../image/list_icon@2x.png" / class="item_right">
+
+					</li>
+					<li class="item">
+						<div class="item_left topicshare">
+							<p class="item_title">话题分享</p>
+						</div>
+						<div class="mui-switch mui-switch-mini mui-switch-blue">
+							<div class="mui-switch-handle" ></div>
+						</div>
+					</li>
+				</ul>
+				</div>
+			</div>
+			<div class="foot">
+				<a href="#" onclick="javascript:history.back(-1);"><div class="foot_left">
+					上一步
+				</div></a>
+				
+				<div class="foot_right">
+					保存修改
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".content").height($(".wrap").height() - $(".head").height() - $(".foot").height());
+		});
+	</script>
+
+</html>

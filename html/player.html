@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css" />
+		<script src="../script/fontsize.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+      #header{
+        background-color: #4B9CF1;
+        height: 0.5rem;
+      }
+    </style>
+
+  </head>
+  <body>
+    <!--头部效果-->
+    <header id='header'></header>
+    <!--视频区域-->
+    <div id="video_container">
+
+    </div>
+
+    <script src="../script/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+  	<script src="../script/api.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+      apiready  = function(){
+        var header = $api.byId('header');
+        $api.fixStatusBar(header);
+        var obj = api.require('playModule');
+        obj.play({
+            rect:{
+                x: 0,
+                y : 0,
+                w : api.frameWidth,
+                h: 320
+            },
+            fixedOn: api.frameName,
+            title: 'test',
+            url: 'http://1253387319.vod2.myqcloud.com/2bfb3109vodgzp1253387319/7f1aab0f7447398154661157093/playlist.m3u8',
+            defaultBtn: true,
+            enableFull : false,
+             isTopView : false,
+             isOpenGesture :true
+        }, function(ret, err) {
+
+        });
+
+
+
+    }
+
+    </script>
+  </body>
+</html>

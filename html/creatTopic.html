@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<link rel="stylesheet" type="text/css" href="../css/init.css" />
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../css/weui.css" />
+	<link rel="stylesheet" type="text/css" href="../css/myweui.css" />
+	<link rel="stylesheet" type="text/css" href="../css/index.css" />
+	<link rel="stylesheet" type="text/css" href="../css/headandfoot.css" />
+	<script src="../script/fontsize.js" type="text/javascript" charset="utf-8"></script>
+	<title>创建话题</title>
+	<style>
+		.doc_body {
+			position: fixed;
+			top: 0;
+			left: 0;
+		}
+
+		#header {
+			height: 0.88rem;
+			background-color: rgba(75, 156, 241, 1);
+			padding: 0 0.32rem;
+			text-align: center;
+			font-size: 0.36rem;
+			color: #FFF;
+			line-height: 0.88rem;
+		}
+
+		img {
+			font-size: 0;
+		}
+
+		.head_left {
+			float: left;
+			margin: 0;
+		}
+
+		#footer {
+			height: 0.98rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: fixed;
+			bottom: 0;
+			width: 100%;
+			background-color: rgba(75, 156, 241, 1);
+			color: #FFF;
+			font-size: 0.36rem;
+		}
+
+		.time_picker {
+			font-size: 0.36rem;
+			color: #999999;
+			text-align: right;
+			border: none;
+			outline: none;
+		}
+
+		.weui-cells {
+			margin-top: 0
+		}
+
+		.banner {
+			position: relative;
+		}
+
+		.weui-cells_form {
+			padding: 0;
+			height: 100%;
+			width: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-color: rgba(0, 0, 0, 0);
+		}
+
+		.weui-cell {
+			padding: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		.weui-cell__bd,
+		.weui-cell__bd,
+		.weui-uploader,
+		.weui-uploader__bd,
+		.weui-uploader__input-box,
+		.weui-uploader__input {
+			height: 100%;
+			width: 100%;
+		}
+
+		.uploader {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 15;
+			opacity: 0;
+		}
+
+		.upload {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+</head>
+
+<body class="doc_body">
+	<header id="header">
+		<div class="head_left" onclick="api.closeWin()"> <img src="../image/nav_icon1@2x.png" /></div>
+		<span class="title">创建话题</span>
+	</header>
+	<div class="banner" >
+		<img src="../image/cjht_pic@2x.png" id="cover" />
+		<form class="uploader" id='uploader'>
+			<input type="file" name="files" value="" class="upload" accept="image/*" onchange="uploader()" />
+		</form>
+
+	</div>
+	<ul class="main">
+		<li class="item" onclick='openWin(0)'>
+			<div class="item_left">
+				<p class="item_title">本期话题</p>
+				<p class="item_mintitle" id='topic_title'>点击输入本期话题</p>
+			</div>
+			<img src="../image/list_icon@2x.png" / class="item_right">
+		</li>
+		<li class="item" onclick='openWin(1)'>
+			<div class="item_left">
+				<p class="item_title">直播介绍</p>
+				<p class="item_mintitle" id="topic_desc">请填写直播描述</p>
+			</div>
+			<img src="../image/list_icon@2x.png" / class="item_right">
+		</li>
+		<li class="item">
+			<div class="item_left">
+				<p class="item_title">选择时间</p>
+				<p class="item_mintitle">
+					<span class="mydata" onclick="data()">2018.01.08 20:30</span>
+					<!-- <span class="mytime" onclick="show_expect_time_picker()" style="margin-left: 0.3rem;">20:30</span> -->
+				</p>
+			</div>
+			<img src="../image/list_icon@2x.png" / class="item_right">
+		</li>
+	</ul>
+	<footer id="footer" onclick="complete()">
+		创建
+	</footer>
+</body>
+<script src="../script/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../script/api.js" type="text/javascript" charset="utf-8"></script>
+<script src="../script/weui.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="../script/muweui.js" type="text/javascript" charset="utf-8"></script> -->
+<script type="text/javascript">
+	apiready = function() {
+		var header = $api.byId('header');
+		$api.fixStatusBar(header);
+		var param = api.pageParam;
+
+		// 监听话题填写完毕
+		api.addEventListener({
+			name: 'huati'
+		}, function(ret, err) {
+			if (ret) {
+				$api.byId('topic_title').innerHTML = ret.value.text_value;
+				params.title = ret.value.text_value;
+			}
+		});
+		// 监听
+		api.addEventListener({
+			name: 'desc'
+		}, function(ret, err) {
+			if (ret) {
+				$api.byId('topic_desc').innerHTML = ret.value.desc;
+				params.excerpt = ret.value.desc;
+			}
+		});
+	}
+
+	var windowItem = ['topicTitle', 'liveIntroduce'];
+	var openWin = function(index) {
+		api.openWin({
+			name: windowItem[index],
+			url: windowItem[index] + '.html',
+			slidBackEnabled: false
+		});
+	}
+
+	// 时间组件
+	function data() {
+		var _this = this;
+		weui.datePicker({
+			start: new Date(),
+			end: new Date().getFullYear(),
+			defaultValue: [new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate()],
+			onConfirm: function(result) {
+				// console.log(result)
+				// 二级调用：时间
+				show_expect_time_picker(result);
+				$('.weui-picker').on('animationend webkitAnimationEnd', function() {
+					show_expect_time_picker(result);
+				});
+			},
+			className: 'mydata'
+		})
+
+	}
+
+	function show_expect_time_picker(date) {
+		var hours = [],
+			minites = [],
+			symbol = [{
+				label: ':',
+				value: 0
+			}];
+		var d = new Date();
+		var my_hours = d.getHours();
+		var my_minutes = d.getMinutes();
+		var date = date[0].value + '-' + date[1].value + '-' + date[2].value;
+		if (!hours.length) {
+			for (var i = my_hours; i < 24; i++) {
+				var hours_item = {};
+				hours_item.label = ('' + i).length === 1 ? '0' + i : '' + i;
+				hours_item.value = i;
+				hours.push(hours_item);
+			}
+		}
+		if (!minites.length) {
+			for (var j = 0; j < 60; j++) {
+				var minites_item = {};
+				minites_item.label = ('' + j).length === 1 ? '0' + j : '' + j;
+				minites_item.value = j;
+				minites.push(minites_item);
+			}
+		}
+		weui.picker(hours, symbol, minites, {
+			defaultValue: [new Date().getHours(), 0, my_minutes],
+			onConfirm: function(result) {
+				var time = result[0].label + ':' + result[2].label;
+				var expect_date = date + ' ' + time;
+				console.log(expect_date)
+				$('.mydata').html(expect_date);
+				// $(_this).find('.weui-cell__ft').text(expect_date);
+			},
+			className: 'mytime'
+		});
+	}
+	var params = {}
+		//      // 上传图片
+	function showAction() {
+		api.actionSheet({
+			title: '上传图片',
+			cancelTitle: '取消',
+			buttons: ['拍照', '从手机相册选择']
+		}, function(ret, err) {
+			if (ret) {
+				getPicture(ret.buttonIndex);
+			}
+		});
+	}
+
+	function getPicture(sourceType) {
+			api.getPicture({
+				sourceType: (sourceType == 2 ? 'library' : 'camera'), // 图片源类型
+				encodingType: 'jpg',
+				mediaValue: 'pic',
+				destinationType: 'base64',
+				allowEdit: true,
+				quality: 50,
+				targetWidth: 100,
+				targetHeight: 100,
+				saveToPhotoAlbum: false
+			}, function(ret, err) {
+						console.log(JSON.stringify(ret));
+				if (ret) {
+					var upUrl =  baseUrl + '/api/user/Anchor/uploadCover';
+					api.ajax({
+						url: upUrl,
+						method: 'post',
+						charset: 'UTF-8',
+						data: {
+							values: {
+								filename: ret.data.substring(ret.data.lastIndexOf("/") + 1)
+							},
+							files: {
+								file: ret.data
+							}
+						}
+						//stream: ret.data
+					}, function(ret, err) {
+						if (ret) {
+							console.log(JSON.stringify(ret));
+						} else {
+							console.log(JSON.stringify(err));
+						}
+
+					});
+				} else {
+					alert(JSON.stringify(err));
+				}
+			});
+		// }
+	}
+
+	//创建话题
+	function complete() {
+		// 直播时间
+		var str = $(".mydata").html(); // 日期字符串
+		str = str.replace(/-/g, '/'); // 将-替换成/，因为下面这个构造函数只支持/分隔的日期字符串
+		var mytoptime = Date.parse(new Date(str)); // 构造一个日期型数据，值为传入的字符串
+		console.log(mytoptime)
+		params.published_time = mytoptime;
+		var url = baseUrl + '/api/user/Anchor/newtopic';
+		$api.ajaxsend(url, params, function(res, err) {
+			if (res.msg == "success") {
+				alert('发布成功');
+				api.openWin({
+					name: 'index',
+					url: '../index.html',
+					pageParam: {
+						name: 'topic'
+					}
+				});
+			}
+		})
+	}
+
+	function uploader() {
+		var url = baseUrl + '/api/user/Anchor/uploadCover';
+		var formData = new FormData($('#uploader')[0])
+		$.ajax({
+			url: url,
+			type: 'POST',
+			cache: false,
+			data: formData,
+			processData: false,
+			contentType: false
+		}).done(function(res) {
+			if(res.code===1){
+				params.cover = res.data.url;
+				document.getElementById('cover').src=res.data.url;
+			}
+		}).fail(function(res) {});
+	}
+</script>
+
+</html>

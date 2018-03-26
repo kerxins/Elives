@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" type="text/css" href="../css/init.css" />
+		<link rel="stylesheet" type="text/css" href="../css/liveroom.css" />
+		<link rel="stylesheet" type="text/css" href="../css/headandfoot.css" />
+		<link rel="stylesheet" type="text/css" href="../css/bandphone.css" />
+		<!--<link rel="stylesheet" type="text/css" href="css/video-script.css" />-->
+		<!--<link rel="stylesheet" type="text/css" href="css/zy.media.min.css" />-->
+		<!--<script src="script/zy.media.min.script" type="text/javascript" charset="utf-8"></script>-->
+		<script src="../script/fontsize.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../script/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="script/video.min.script" type="text/javascript" charset="utf-8"></script>-->
+		<title>直播间</title>
+	</head>
+
+	<body>
+		<!--<div class="mask">
+			<div class="mask_main" style="display:none;">
+				<div class="mask_main_head">
+					退出直播
+				</div>
+				<ul>
+					<li>退出</li>
+					<li>返回</li>
+				</ul>
+			</div>
+			<div class="mask_show">
+				<div class="mask_show_head">
+					<p class="mask_show_head_left">
+						分享至
+					</p>
+					<div class="mask_show_head_right">
+						<image src="image/share_icon3@2x.png"/>
+					</div>
+				</div>
+				<div class="mask_content">
+					<div class="mask_content_item">
+						<div class="mask_img">
+							<image src="image/share_icon1@2x.png"/>
+						</div>
+						<p class="mask_title">微信好友</p>
+					</div>
+					<div class="mask_content_item">
+						<div class="mask_img">
+							<image src="image/share_icon2@2x.png"/>
+						</div>
+						<p class="mask_title">朋友圈</p>
+					</div>
+				</div>
+			</div>
+		</div>-->
+		<div class="wrap" data-id="0">
+			<div class="header" style="padding: 0;margin: 0;background-color: rgba(75,156,241,1);">
+				<div class="zb" style="width: 100%;height: 100%;">
+					<!--直播流直播协议-->
+				</div>
+				<div class="zb_mask" style="position: relative;width: 100%;height: 100%;margin-top: -4rem;overflow: hidden;">
+					<div class="zb_mask_left">
+						<div class="left_logo">
+							<img src="../image/tmp5.png"/>
+						</div>
+						<div class="left_center">
+							<p class="center_top">
+								苹果发布会
+							</p>
+							<p class="center_">
+								1134人观看
+							</p>
+						</div>
+						<div class="left_left">
+							关注
+						</div>
+					</div>
+					<ul class="zb_mask_right">
+						<li>
+							<img src="../image/tmp8.png"/>
+						</li>
+						<li>
+							<img src="../image/tmp8.png"/>
+						</li>
+						<li>
+							<img src="../image/tmp8.png"/>
+						</li>
+						<li>
+							<img src="../image/tmp8.png"/>
+						</li>
+					</ul>
+					<div class="center_main">
+						<div class="center_main_logo">
+							<img src="../image/yyzb_icon@2x.png"/>
+						</div>
+						<p>直播已结束</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="">
+				<div class="content_one">
+					<ul class="talk_ul">
+						<li>
+							<div class="item_logo">
+								<img src="../image/tmp5.png"/>
+							</div>
+							<div class="item_res">
+								<p class="item_title">
+									e直播：
+								</p>
+								<div class="item_main">
+									2017苹果秋季新品发布会于美国当地时间9月12日上午10点
+								</div>
+							</div>
+						</li>
+					</ul>
+					<div class="chat">
+						<div class="" style="border-bottom:1px solid rgba(228,228,228,1);overflow: hidden;height: 1rem;">
+							<div class="chat_logo">
+								<img src="../image/chat_icon1@2x.png" />
+							</div>
+							<input type=" text" class="chat_ipt" placeholder="输入聊天内容" />
+							<div class="send">
+								发送
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				
+
+			</div>
+	</body>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".content_one").height($(".wrap").height() - $(".header").height() - $(".tap").height());
+			$(".tap ul li").eq($(".wrap").data("id")).addClass("liactive").siblings().removeClass("liactive");
+			$(".content_one").eq($(".wrap").data("id")).show().siblings().hide();
+		});
+		$(".tap ul li").click(function() {
+			$(this).addClass("liactive").siblings().removeClass("liactive");
+			$(".content_one").eq($(this).index()).show().siblings().hide();
+		});
+		$(".needmore").click(function() {
+			
+			
+		});
+	</script>
+
+</html>

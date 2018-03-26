@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" type="text/css" href="../css/init.css" />
+		<link rel="stylesheet" type="text/css" href="../css/headandfoot.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/index.css" />
+		<script src="../script/fontsize.js" type="text/javascript" charset="utf-8"></script>
+		<title>创建话题</title>
+		<style>
+			#header{
+				height: 0.88rem;
+				background-color: rgba(75, 156, 241, 1);
+				padding: 0 0.32rem;
+				text-align: center;
+				font-size: 0.36rem;
+				color: #FFF;
+				line-height: 0.88rem;
+			}
+			img{
+				font-size: 0;
+			}
+			.head_left{
+				float: left;
+				margin-left: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header id="header">
+			<div class="head_left" onclick='api.closeWin()'> <img src="../image/nav_icon1@2x.png" /></div>
+			<span class="title">创建话题</span>
+		</header>
+			<textarea name="" rows="" cols="" id="text_inp" maxlength="50" placeholder="请输入本期话题"></textarea>
+			<span class="gd">0 / 50 个字</span>
+			<div class="complete" onclick='complete()'>
+				完成
+			</div>
+	</body>
+	<script src='../script/api.js'></script>
+	<script src="../script/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		apiready = function(){
+				var header = $api.byId('header');
+				$api.fixStatusBar(header);
+		}
+		function complete(){
+			var text_value = $api.byId('text_inp').value;
+			if(text_value){
+				api.sendEvent({
+				    name: 'huati',
+				    extra: {
+				        text_value:text_value
+				    }
+				});
+				api.closeWin();
+			}else{
+				alert('话题不能为空')
+			}
+		}
+
+	</script>
+</html>

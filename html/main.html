@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<link rel="stylesheet" type="text/css" href="../css/init.css" />
+	<link rel="stylesheet" type="text/css" href="../css/mainindex.css" />
+	<link rel="stylesheet" type="text/css" href="../css/headandfoot.css" />
+	<link rel="stylesheet" type="text/css" href="../css/swiper.css" />
+	<script src="../script/fontsize.js" type="text/javascript" charset="utf-8"></script>
+	<title>首页</title>
+	<style type="text/css">
+
+	</style>
+</head>
+
+<body>
+	<div class="nav">
+		<div class="nav_left" data-id="0">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide" data-type="2">
+						<p>推荐</p>
+						<div class="line_active"></div>
+					</div>
+					<div class="swiper-slide" data-type='3'>
+						<p>最新</p>
+						<div class="line_active"></div>
+					</div>
+					<div class="swiper-slide" data-type='1'>
+						<p>热点</p>
+						<div class="line_active">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="nav_right">
+			<input type="text" name="" onclick='search()' value="" id="seach" placeholder="苹果发布会" />
+			<div class="seach_logo">
+				<img src="../image/search_icon@2x.png" />
+			</div>
+		</div>
+	</div>
+	<div class="content">
+		<div class="banner">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide"><img src="../image/100121423.png" /></div>
+					<div class="swiper-slide"><img src="../image/100121423.png" /></div>
+					<div class="swiper-slide"><img src="../image/100121423.png" /></div>
+				</div>
+				<!-- 如果需要分页器 -->
+				<div class="swiper-pagination" style="width: auto !important;"></div>
+			</div>
+		</div>
+		<div class="content_main">
+			<div class="content_head">
+				<div class="content_head_left">
+					<div class="content_head_logo">
+						<img src="../image/index_tjzb_icon@2x.png" />
+					</div>
+					<p class="title">推荐直播</p>
+				</div>
+				<a href="">
+					<div class="content_head_right">
+						<div class="right_logo">
+							<img src="../image/list_icon@2x.png" />
+						</div>
+						<p class="right_title">更多</p>
+					</div>
+				</a>
+
+			</div>
+			<ul class="content_ul"></ul>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript" src="../script/api.js"></script>
+<script src="../script/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../script/swiper.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+</script>
+<script>
+	apiready = function() {
+		var roomList;
+		getRoomList();
+		// 拦截Android的返回键，在首页点击返回键，提示退出应用
+		api.addEventListener({
+			name: 'keyback'
+		}, function(ret, err) {
+			api.confirm({
+				title: '提示',
+				msg: '是否退出应用',
+				buttons: ['确定', '取消']
+			}, function(ret, err) {
+				if (ret.buttonIndex == 1) {
+					// 关闭当前的主Widget，就可以实现推出APP的效果
+					api.closeWidget({
+						silent: true //直接退出，无需提示
+					});
+				}
+			});
+		});
+		var swiper = new Swiper('.nav_left .swiper-container', {
+			pagination: '.swiper-pagination',
+			slidesPerView: 3,
+			paginationClickable: true,
+			spaceBetween: 0
+		});
+		var mySwiper = new Swiper('.banner .swiper-container', {
+			direction: 'horizontal',
+			loop: true,
+			speed: 500,
+			autoplay: 1500,
+			// 如果需要分页器
+			pagination: '.swiper-pagination',
+
+			// 如果需要前进后退按钮
+			//			nextButton: '.swiper-button-next',
+			//			prevButton: '.swiper-button-prev',
+
+			// 如果需要滚动条
+			//			scrollbar: '.swiper-scrollbar',
+		})
+		$(".nav_left .swiper-slide").eq($(".nav_left").data('id')).find("p").css("color", "rgba(0,0,0,1)");
+		$(".nav_left .swiper-slide").eq($(".nav_left").data('id')).find(".line_active").show();
+		$(".nav_left .swiper-slide").click(function() {
+			$(this).find("p").css("color", "rgba(0,0,0,1)");
+			$(this).siblings().find("p").css("color", "rgba(99, 107, 112, 1)");
+			$(this).find(".line_active").show();
+			$(this).siblings().find(".line_active").hide()
+			$(".content_head_left .title").text($(this).find("p").text() + "直播")
+			var index = $(this).data('type');
+			viewRooms(index);
+		})
+	}
+
+	var menus;
+
+
+	// 跳转到搜索页面
+	function search() {
+		api.openWin({
+			name: 'search',
+			url: 'search.html',
+			slidBackEnabled: false
+		});
+	}
+	// 获取所有类型的直播间
+	function getRoomList() {
+		var url = baseUrl + '/api/home/index/liveroom'
+		$api.post(url, {}, function(ret) {
+			roomList = ret;
+			// 初始房间类型
+			var roomType = '2';
+			viewRooms(roomType);
+		}, 'json');
+	}
+	// 直播房间渲染
+	function viewRooms(roomType) {
+		var html = '';
+		var roomData = roomType == '1' ? roomList.hot : roomType == '2' ? roomList.recommend : roomType == '3' ? roomList.new : '';
+		roomData.forEach(function(el, index) {
+			// var url = baseUrl + '/portal/live/index/id/'+ el.id + 'html';
+			var more = JSON.parse(el.more);
+			html += '<li class="content_list" onclick="liveDetail(' + el.id + ')">' +
+				'	<a href="javascript:;" >' +
+				'		<div class="list_logo">' +
+				'			<div class="logo_main">' +
+				'				<img src="' + baseUrl + '/upload/' + more.thumbnail + '" />' +
+				'			</div>' +
+				'		</div>' +
+				'		<div class="seen_group">' +
+				'			<div class="seennum">' + el.post_hits + '</div>' +
+				'			<div class="seen">' +
+				'				<img src="../image/inde_pic_icon@2x.png" />' +
+				'			</div>' +
+				'		</div>' +
+				'		<div class="list_res">' +
+				'			<h5>' + el.post_title + '</h5>' +
+				'			<p class="list_produce">' + el.post_excerpt + '</p>' +
+				'		</div>' +
+				'	</a>' +
+				'</li>'
+		})
+		$('.content_ul').html(html);
+	}
+	// 直播详情
+	function liveDetail(id) {
+		api.openWin({
+			name: 'room',
+			url: 'liveroom1.html',
+			slidBackEnabled: false,
+			pageParam: {
+				roomId: id
+			}
+		});
+	}
+</script>
+
+</html>

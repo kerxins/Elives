@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<link rel="stylesheet" type="text/css" href="../css/init.css" />
+	<link rel="stylesheet" type="text/css" href="../css/headandfoot.css" />
+	<!--<link rel="stylesheet" type="text/css" href="css/index.css" />-->
+	<link rel="stylesheet" type="text/css" href="../css/personl.css" />
+	<link rel="stylesheet" type="text/css" href="../css/seacher.css" />
+	<script src="../script/fontsize.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<title>搜索房间</title>
+</head>
+
+<body>
+
+	<div class="header" id='header'>
+		<div class="seacher">
+			<input type="" name="" id="keywords" value="" placeholder="请输入关键词" />
+		</div>
+		<p class="del" onclick="search()">搜索</p>
+		<div class="seach_logo">
+			<img src="../image/search_icon@2x.png" />
+		</div>
+		<div class="cha">
+			<img src="../image/search_icon_close@2x.png" />
+		</div>
+	</div>
+	<ul class="contentone_main" style="margin-top: 0;">
+		<li>
+			<div class="item_minlogo">
+				<img src="../image/icon_sound@2x.png" />
+			</div>
+			<div class="item_logo">
+				<img src="../image/100018560.png" />
+			</div>
+			<div class="item_res">
+				<h4>张三的直播间张三的直播间张三的直播间张三的adasdadasdadasd</h4>
+				<div class="show_type">
+					<p class="show_title">即将直播</p>
+					<p class="title_right"><span>10</span>观看</p>
+				</div>
+				<div class="show_data">
+					<p class="describe">
+						<span>09-29</span><span>20:00</span>
+					</p>
+				</div>
+			</div>
+		</li>
+	</ul>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+	apiready = function() {
+		var header = $api.byId('header');
+		//适配iOS 7+，Android 4.4+状态栏
+		$api.fixStatusBar(header);
+	}
+
+	function search() {
+		var url = baseUrl + '/api/home/index/search';
+		var key = document.getElementById('keywords').value;
+		if (key == '' || typeof key == 'undefined') {
+			$api.toast('提示', '关键词不能为空');
+			return false;
+		} else {
+			api.ajax({
+				url: url,
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				data: {
+					values: {
+						keyword: key
+					}
+				}
+			}, function(res) {
+				if (res.msg == "success") {
+					var html = '';
+					var data = res.data;
+					data.forEach(function(el, index) {
+						var timestamp = el.published_time;
+						if (timestamp) {
+							var newDate = new Date();
+							var time1 = newDate.setTime(timestamp * 1000);
+							time1 = newDate.toLocaleDateString(time1);
+						}
+						var live_state = '';
+						switch (el.live_state) {
+							case 1:
+								live_state = '正在直播中'
+								break;
+							case 2:
+								live_state = '直播已结束'
+								break;
+							default:
+								live_state = '直播即将开始'
+						}
+						var more = JSON.parse(el.more);
+						html+='<li>'+
+									'	<div class="item_minlogo">'+
+									'		<img src="../image/icon_sound@2x.png" />'+
+									'	</div>'+
+									'	<div class="item_logo">'+
+									'		<img src="'+baseUrl+'/upload/'+more.thumbnail+'" />'+
+									'	</div>'+
+									'	<div class="item_res">'+
+									'		<h4>'+el.post_title+'</h4>'+
+									'		<div class="show_type">'+
+									'			<p class="show_title">'+ live_state +'</p>'+
+									'			<p class="title_right"><span>'+el.post_hits+'</span>观看</p>'+
+									'		</div>'+
+									'		<div class="show_data">'+
+									'			<p class="describe">'+time1+'</p>'+
+									'		</div>'+
+									'	</div>'+
+								'	</li>'
+					})
+					$(".contentone_main").html(html);
+				}
+			});
+
+		}
+
+	}
+</script>
+
+</html>

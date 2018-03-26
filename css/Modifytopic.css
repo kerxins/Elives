@@ -1,0 +1,21 @@
+body{
+	/*background-color: rgba(255,255,255,1) !important;*/
+}
+.topicshare{
+	width: 3rem;
+}
+.mui-switch{
+	/*width: .78rem;*/
+	float: right;
+	top: 50%;
+	margin-top: -15px;
+	margin-right: 0.31rem;
+}
+.main_res{
+	overflow: hidden;
+	background-color: white;
+}
+.item:last-of-type{
+	border: none;
+}
+

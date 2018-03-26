@@ -1,0 +1,75 @@
+body {
+	background-color: rgba(244, 245, 249, 1)
+}
+
+.main {
+	width: 6.72rem;
+	padding: 0 0.39rem 1.03rem 0.39rem;
+	background-color: white;
+	overflow: hidden;
+}
+
+.main_ul {
+	margin-top: 0.5rem;
+	width: 100%;
+	overflow: hidden;
+}
+
+.item {
+	height: 1.09rem;
+	border-bottom: 0.01rem solid rgba(204, 204, 204, 1);
+}
+
+.item_logo {
+	width: 0.24rem;
+	height: 0.32rem;
+	/*background-color: red;*/
+	float: left;
+	margin-left: 0.05rem;
+	margin-top: 0.45rem;
+}
+
+.item_ipt {
+	margin-top: 0.45rem;
+	width: 3.8rem;
+	height: 0.32rem;
+	display: block;
+	float: left;
+	border: none;
+	outline: none;
+	margin-left: .2rem;
+	font-size: 0.32rem;
+}
+
+.lined {
+	width: 0.01rem;
+	height: 0.39rem;
+	background: rgba(204, 204, 204, 1);
+	float: left;
+	margin-top: 0.4rem;
+}
+
+.getyzm {
+	display: block;
+	float: right;
+	line-height: 1.1rem;
+	margin-right: 0.27rem;
+	font-size: 0.32rem;
+	font-family: MicrosoftYaHeiLight;
+	color: rgba(70, 154, 244, 1);
+}
+
+.complete {
+	margin-top: 0.59rem;
+}
+
+.notice {
+	
+	width: 6.3rem;
+	display: block;
+	margin: 0 auto;
+	margin-top: 0.53rem;
+	font-size: 0.28rem;
+	font-family: PingFangSC-Light;
+	color: rgba(153, 153, 153, 1);
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" type="text/css" href="../css/init.css" />
+		<link rel="stylesheet" type="text/css" href="../css/homechannel.css"/>
+		<script src="../script/fontsize.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../script/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<title>e直播</title>
+		<style>
+			.btn{
+				width: 5.8rem;
+				height: 1rem;
+				border: 1px solid #469AF4;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 0;
+				border-radius: 0.15rem;
+			}
+			.nomol{ background: #469AF4; color: #FFF;}
+			.wx{ margin-top: 0.45rem;}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="wrap_head">
+				<img src="../image/login_bg@2x.png" width="100%" />
+			</div>
+			<a href="load.html">
+			<div class="btn nomol">
+				账号密码登陆
+			</div>
+			</a>
+			<div class="btn wx">
+				微信登陆
+			</div>
+		</div>
+		<script type="text/javascript" src="../script/api.js" ></script>
+		<script>
+			apiready = function(){
+				
+			}
+			//账号登录
+			function  count(){
+				//登录跳转
+				api.openWin({
+	                name: 'login',
+	                url: 'login.html'
+	            });
+			}
+			//微信
+			function wxLogo(){
+				
+			}
+		</script>
+		
+	</body>
+</html>

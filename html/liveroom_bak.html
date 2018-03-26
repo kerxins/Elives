@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" type="text/css" href="../css/init.css" />
+		<link rel="stylesheet" type="text/css" href="../css/liveroom.css" />
+		<!-- <link rel="stylesheet" type="text/css" href="../css/api.css" /> -->
+		<link rel="stylesheet" type="text/css" href="../css/headandfoot.css" />
+		<link rel="stylesheet" type="text/css" href="../css/bandphone.css" />
+		<script src="../script/fontsize.js" type="text/javascript" charset="utf-8"></script>
+		<title>直播间</title>
+		<style type="text/css">
+				.comment {
+	            width: 680px; 
+	            margin: 20px auto;
+	            position: relative;
+	            background: #fff;
+	            padding: 20px 50px 50px;
+	            border: 1px solid #DDD;
+	            border-radius: 5px;
+	        }
+	        .comment h3 {
+	            height: 28px;
+	            line-height: 28px
+	        }
+
+	        .item_main span img {
+	            width: 0.3rem;
+	            height: 0.3rem;
+	        }
+
+	        .item_main span {
+	            display: inline-block;
+	        }
+
+	        .com_form {
+	            width: 100%;
+	            position: relative
+	        }
+
+	        .input {}
+
+	        #facebox {
+	            width: 90% !important;
+	            padding: 5% !important;
+	            position: absolute !important;
+	            width: 1 !important;
+	            z-index: 1000 !important;
+	            top: 0.9rem !important;
+	        }
+
+	        .com_form p {
+	            height: 28px;
+	            line-height: 28px;
+	            position: relative;
+	            margin-top: 10px;
+	        }
+
+	        span.emotion {
+	            width: 42px;
+	            height: 20px;
+	            padding-left: 20px;
+	            cursor: pointer
+	        }
+
+	        span.emotion:hover {
+	            background-position: 2px -28px
+	        }
+
+	        .qqFace {
+	            margin-top: 4px;
+	            background: #fff;
+	            padding: 2px;
+	            border: 1px #dfe6f6 solid;
+	        }
+
+	        .qqFace table td {
+	            padding: 0px;
+	        }
+
+	        .qqFace table td img {
+	            cursor: pointer;
+	            border: 1px #fff solid;
+	        }
+
+	        .qqFace table td img:hover {
+	            border: 1px #0066cc solid;
+	        }
+
+	        #show {
+	            width: 770px;
+	            margin: 20px auto;
+	            background: #fff;
+	            padding: 5px;
+	            border: 1px solid #DDD;
+	            vertical-align: top;
+	        }
+
+	        .sub_btn {
+	            position: absolute;
+	            right: 0px;
+	            top: 0;
+	            display: inline-block;
+	            zoom: 1;
+	            display: inline;
+	            vertical-align: baseline;
+	            margin: 0 2px;
+	            outline: none;
+	            cursor: pointer;
+	            text-align: center;
+	            font: 14px/100% Arial, Helvetica, sans-serif;
+	            padding: .5em 2em .55em;
+	            text-shadow: 0 1px 1px rgba(0, 0, 0, .6);
+	            -webkit-border-radius: 3px;
+	            -moz-border-radius: 3px;
+	            border-radius: 3px;
+	            -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	            -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	            box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	            color: #e8f0de;
+	            border: solid 1px #538312;
+	            background: #64991e;
+	            background: -webkit-gradient(linear, left top, left bottom, from(#7db72f), to(#4e7d0e));
+	            background: -moz-linear-gradient(top, #7db72f, #4e7d0e);
+	            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7db72f', endColorstr='#4e7d0e');
+	        }
+
+	        .sub_btn:hover {
+	            background: #538018;
+	            background: -webkit-gradient(linear, left top, left bottom, from(#6b9d28), to(#436b0c));
+	            background: -moz-linear-gradient(top, #6b9d28, #436b0c);
+	            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6b9d28', endColorstr='#436b0c');
+	        }
+	        .vcp-error-tips {
+	            font-size: 0.25rem !important;
+
+	        }
+	        .vcp-player video {
+	            width: 100%;
+	            height: 100%;
+	            display: block;
+	            overflow: hidden;
+	            object-position: center 0rem;;
+	        }
+	        .newjoin{
+	            overflow: hidden;
+	            background-color: rgba(200,200,200,1);
+	            position: absolute;
+	            bottom: 0;
+	        }
+	        .newjoin ul li{
+	            height: 1rem;
+	            width: 100%;
+	            background-color: white;
+	            border-bottom: 0.01rem solid rgba(153,153,153,1);
+	            text-align: center;
+	            line-height: 1rem;
+	            font-size: .32rem;
+	            color: black;
+	        }
+	        .newjoin .cancel{
+	            height: 1.2rem;
+	            width: 100%;
+	            margin-top: 0.16rem;
+	            background-color: white;
+	            text-align: center;
+	            line-height: 1.2rem;
+	            font-size: .32rem;
+	            color: black;
+	        }
+	        .zan {
+	            width: 2rem;
+	            height:3rem;
+	            /*background-color: blue;*/
+	            position: fixed;
+	            z-index: 3;
+	            bottom: 4rem;
+	            right: .3rem;
+	            display: flex;
+	            flex-direction: column;
+	            justify-content:flex-end;
+	            align-items: center;
+	        }
+
+	        .zan_logo {
+	            width: .6rem;
+	            height: .6rem;
+	        }
+
+	        .zan_title {
+	            width: 0.9rem;
+	            height: .4rem;
+	            border-radius: .25rem;
+	            background-color: rgba(51, 51, 51, .4);
+	            color: rgba(255, 255, 255, 1);
+	            font-size: 0.16rem;
+	            line-height: .4rem;
+	            text-align: center;
+	            margin-left: 0.7rem;
+	        }
+	        .follow{
+	            font-size: 0.26rem;
+	            text-align: center;
+	        }
+		</style>
+	</head>
+
+	<body>
+		<div class="mask" style="display: none;">
+			<div class="mask_main" style="display:none;">
+				<div class="mask_main_head">
+					退出直播
+				</div>
+				<ul>
+					<a href="#" onclick="javascript:history.back(-1);">
+						<li>退出</li>
+					</a>
+					<li class="off">返回</li>
+				</ul>
+			</div>
+			<div class="mask_show" style="display: none;">
+				<div class="mask_show_head">
+					<p class="mask_show_head_left">
+						分享至
+					</p>
+					<div class="mask_show_head_right">
+						<img src="../image/share_icon3@2x.png" />
+					</div>
+				</div>
+				<div class="mask_content">
+					<div class="mask_content_item">
+						<div class="mask_img">
+							<img src="../image/share_icon1@2x.png" />
+						</div>
+						<p class="mask_title">微信好友</p>
+					</div>
+					<div class="mask_content_item">
+						<div class="mask_img">
+							<img src="../image/share_icon2@2x.png" />
+						</div>
+						<p class="mask_title">朋友圈</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="wrap" data-id="0">
+			<div class="header" style="padding: 0;margin: 0;">
+				<div class="zb" style="width: 100%;height: 100%;background-color: white;">
+					<!--直播流直播协议-->
+
+
+				</div>
+				<!--<div class="zb_mask" style="background-color: red;position: relative;width: 100%;height: 100%;margin-top: -4rem;overflow: hidden;">
+					<div class="return">
+						<image src="image/nav_icon1@2x.png" style="width: 0.14rem;height: 0.24rem;margin: 0 auto;margin-top: .16rem;" />
+					</div>
+					<div class="fansnum">
+
+					</div>
+					<div class="share">
+						<image src="image/nav_icon4@2x.png" / style="width: 0.4rem;height:.4rem;margin: 0 auto;margin-top: 0.08rem;">
+					</div>
+				</div>-->
+			</div>
+			<div class="tap">
+				<ul>
+					<li class="liactive">互动</li>
+					<li>主播</li>
+					<li>介绍</li>
+				</ul>
+				<div class="follow">
+					<span class="sp_left">+</span><span class="sp_right">关注</span>
+				</div>
+			</div>
+			<div class="">
+				<div class="content_one" id="content_oneactive">
+					<ul class="talk_ul" style="overflow: hidden;padding-bottom: 2rem;" id="talk_ulone">
+						<li>
+							<div class="item_logo">
+								<img src="../image/tmp5.png" />
+							</div>
+							<div class="item_res">
+								<p class="item_title">
+									e直播：
+								</p>
+								<div class="item_main">
+									2017苹果秋季新品发布会于美国当地时间9月12日上午10点
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="item_logo">
+								<img src="../image/tmp5.png" />
+							</div>
+							<div class="item_res">
+								<p class="item_title">
+									e直播：
+								</p>
+								<div class="item_main">
+									2017苹果秋季新品发布会于美国当地时间9月12日上午10点
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="item_logo">
+								<img src="../image/tmp5.png" />
+							</div>
+							<div class="item_res">
+								<p class="item_title">
+									e直播：
+								</p>
+								<div class="item_main">
+									2017苹果秋季新品发布会于美国当地时间9月12日上午10点
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="item_logo">
+								<img src="../image/tmp5.png" />
+							</div>
+							<div class="item_res">
+								<p class="item_title">
+									e直播：
+								</p>
+								<div class="item_main">
+									2017苹果秋季新品发布会于美国当地时间9月12日上午10点
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="item_logo">
+								<img src="../image/tmp5.png" />
+							</div>
+							<div class="item_res">
+								<p class="item_title">
+									e直播：
+								</p>
+								<div class="item_main">
+									2017苹果秋季新品发布会于美国当地时间9月12日上午10点
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="item_logo">
+								<img src="../image/tmp5.png" />
+							</div>
+							<div class="item_res">
+								<p class="item_title">
+									e直播：
+								</p>
+								<div class="item_main">
+									2017苹果秋季新品发布会于美国当地时间9月12日上午10点
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="item_logo">
+								<img src="../image/tmp5.png" />
+							</div>
+							<div class="item_res">
+								<p class="item_title">
+									e直播：
+								</p>
+								<div class="item_main">
+									2017苹果秋季新品发布会于美国当地时间9月12日上午10点
+								</div>
+							</div>
+						</li>
+						</li>
+						<li>
+							<div class="item_logo">
+								<img src="../image/tmp5.png" />
+							</div>
+							<div class="item_res">
+								<p class="item_title">
+									e直播：
+								</p>
+								<div class="item_main">
+									2017苹果秋季新品发布会于美国当地时间9月12日上午10点
+								</div>
+							</div>
+						</li>
+						</li>
+						<li>
+							<div class="item_logo">
+								<img src="../image/tmp5.png" />
+							</div>
+							<div class="item_res">
+								<p class="item_title">
+									e直播：
+								</p>
+								<div class="item_main">
+									2017苹果秋季新品发布会于美国当地时间9月12日上午10点
+								</div>
+							</div>
+						</li>
+						</li>
+						<li>
+							<div class="item_logo">
+								<img src="../image/tmp5.png" />
+							</div>
+							<div class="item_res">
+								<p class="item_title">
+									e直播：
+								</p>
+								<div class="item_main">
+									2017苹果秋季新品发布会于美国当地时间9月12日上午10点
+								</div>
+							</div>
+						</li>
+						</li>
+						<li>
+							<div class="item_logo">
+								<img src="../image/tmp5.png" />
+							</div>
+							<div class="item_res">
+								<p class="item_title">
+									e直播：
+								</p>
+								<div class="item_main">
+									2017苹果秋季新品发布会于美国当地时间9月12日上午10点
+								</div>
+							</div>
+						</li>
+					</ul>
+					<div class="chat">
+						<div class="" style="border-bottom:1px solid rgba(228,228,228,1);overflow: hidden;height: 1rem;">
+							<div class="chat_logo emotion">
+								<img src="../image/chat_icon1@2x.png" />
+							</div>
+							<div class="v_line">
+
+							</div>
+							<div class="chat_logo needmore">
+								<img src="../image/chat_icon2@2x.png" />
+							</div>
+							<input type=" text" class="chat_ipt " placeholder="输入聊天内容" autofocus="autofocus" />
+							<input type="hidden" placeholder="输入聊天内容" id="saytext">
+
+							<div class="mymess" style="width: 1.36rem;height: 100%;float: left;" onclick="mysend()">
+
+								<div class="send" style="display:block;">
+									发送
+								</div>
+							</div>
+						</div>
+						<div class="more" style="display: none;">
+							<div class="pic">
+								<img src="../image/chat_icon3@2x.png" />
+							</div>
+							<div class="phone">
+								<img src="../image/chat_icon4@2x.png" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="content_one">
+					<div class="item_head">
+						<div class="item_head_logo">
+							<img src="../image/tmp5.png" />
+						</div>
+						<div class="item_head_res">
+							<h4>张三的直播间</h4>
+							<p class="describe">
+								张三的直播间介绍张三的直播间介绍张三的直播间介绍
+							</p>
+						</div>
+					</div>
+					<ul class="contentone_main" style="margin-top: 0;">
+						<li>
+							<div class="list_minlogo">
+								<img src="../image/icon_sound@2x.png" />
+							</div>
+							<div class="list_logo">
+								<img src="../image/100018560.png" />
+							</div>
+							<div class="list_res">
+								<h4>张三的直播间张三的直播间张三的直播间张三的adasdadasdadasd</h4>
+								<div class="show_type">
+									<p class="show_title">即将直播</p>
+									<p class="title_right"><span>10</span>观看</p>
+								</div>
+								<div class="show_data">
+									<p class="describe">
+										<span>09-29</span><span>20:00</span>
+									</p>
+								</div>
+						</li>
+					</ul>
+					</div>
+					<div class="content_one" style="margin-top: 0.16rem;background-color: white;overflow: hidden;">
+						<h3 class="tthree_h">
+						2017苹果春季新品发布会
+					</h3>
+						<p class="tthree_p">
+							2017苹果春季新品发布会是指苹果于2017春季举办的新品发布会。 2017苹果春季新品发布会尚未举行，但是官网推出了一款拥有动人红色外观的特别版iPhone 7和iPhone 7 Plus，起售价格为6188元；iPhone SE的内存升级版，起售价为人民币3,288 元；新款9.7英寸的iPad，售价2688元起。
+						</p>
+					</div>
+				</div>
+
+			</div>
+	</body>
+	<script src="../script/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/api.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	apiready = function(){
+		$('.emotion').qqFace({
+			id: 'facebox',
+			assign: 'saytext',
+			path: 'arclist/' //表情存放的路径
+		});
+
+		$(".sub_btn").click(function() {
+			var str = $("#saytext").val();
+			$("#show").html(replace_em(str));
+		});
+
+	}
+
+		//查看结果
+
+		$(document).ready(function() {
+			$(".content_one").height($(".wrap").height() - $(".header").height() - $(".tap").height());
+			$(".tap ul li").eq($(".wrap").data("id")).addClass("liactive").siblings().removeClass("liactive");
+			$(".content_one").eq($(".wrap").data("id")).fadeIn().siblings().fadeOut();
+		});
+		$(".tap ul li").click(function() {
+			$(this).addClass("liactive").siblings().removeClass("liactive");
+			$(".content_one").eq($(this).index()).fadeIn().siblings().fadeOut();
+		});
+		$(".return").click(function() {
+			$(".mask").fadeIn();
+			$(".mask_main").fadeIn();
+		});
+		$(".off").click(function() {
+			$(".mask").fadeOut();
+			$(".mask_main").fadeOut();
+		});
+		$(".share").click(function() {
+			$(".mask").fadeIn();
+			$(".mask_show").fadeIn();
+		});
+		$(".mask_show_head_right").click(function() {
+			$(".mask").fadeOut();
+			$(".mask_show").fadeOut();
+		})
+	</script>
+	<script type="text/javascript" src="../script/jquery.qqFace.js"></script>
+	<script type="text/javascript">
+
+		var ws = new WebSocket("ws://114.215.223.17:2346/");
+		ws.onopen = function() {
+			var data = {
+				type: "login",
+				name: 131,
+				room_id: 1,
+				client_name: "sgj"
+			};
+			var mydata = JSON.stringify(data);
+			ws.send(mydata);
+		};
+
+		$(document).keydown(function(event) {
+			if(event.keyCode == 13) {
+				mysend()
+			}
+		});
+
+		function mysend() {
+			var tet = $(".chat_ipt").val();
+			$(".chat").css("height", "1rem");
+			$(".emotion ").removeClass("actic");
+			var tet = $(".chat_ipt").val();
+			var onedata = {
+				type: "say",
+				to_client_id: "all",
+				content: tet
+			};
+			var myonedata = JSON.stringify(onedata);
+			if($(".chat_ipt").val() != "") {
+				ws.send(myonedata);
+			}
+			$(".chat_ipt").val("");
+			$(".chat_ipt").attr("placeholder", "输入聊天内容");
+		}
+		ws.onmessage = function(evt) {
+			var myredata = JSON.parse(evt.data);
+			if(myredata.type == "say") {
+				var icon = myredata.content
+				function replace_em(str) {
+					str = str.replace(/\</g, '&lt;');
+					str = str.replace(/\>/g, '&gt;');
+					str = str.replace(/\n/g, '<br/>');
+					str = str.replace(/\[em_([0-9]*)\]/g, '<span><img src="arclist/$1.gif" border="0" /></span>');
+					return str;
+				}
+
+				$(".talk_ul").append("<li><div class='item_logo'><img src='../image/icon_sound@2x.png'/></div><div class='item_res'><p class='item_title'>" + myredata.from_client_name + "</p><div class='item_main'>" + replace_em(icon) + "</div></div></li>")
+			} else if(myredata.type == "ping") {
+				//				alert("STOP!")
+				var twodata = {
+					type: "pong"
+				};
+				var mytwodata = JSON.stringify(twodata);
+				ws.send(mytwodata);
+			} else if(myredata.type == "login") {
+				$(".fansnum").html(myredata.num)
+			}
+			var div = document.getElementById('content_oneactive');
+			div.scrollTop = div.scrollHeight;
+
+		};
+	</script>
+
+</html>

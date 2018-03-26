@@ -1,0 +1,86 @@
+.wrap {
+	background: -webkit-linear-gradient(rgba(75, 156, 241, 1), rgba(0, 82, 167, 1));
+	/* Safari 5.1 - 6.0 */
+	background: -o-linear-gradient(rgba(75, 156, 241, 1), rgba(0, 82, 167, 1));
+	/* Opera 11.1 - 12.0 */
+	background: -moz-linear-gradient(rgba(75, 156, 241, 1), rgba(0, 82, 167, 1));
+	/* Firefox 3.6 - 15 */
+	background: linear-gradient(rgba(75, 156, 241, 1), rgba(0, 82, 167, 1));
+	/* 标准的语法 */
+}
+
+.voice_type {
+	width: 100%;
+	height: auto;
+	margin-top: 0.3rem;
+}
+
+.voice_type_left {
+	width: .24rem;
+	height: .24rem;
+	border-radius: 50%;
+	margin-top: 0.15rem;
+	background-color: white;
+	float: left;
+	margin-left: .32rem;
+}
+
+.voice_type_right {
+	font-size: 0.3rem;
+	font-family: PingFangSC-Regular;
+	color: rgba(255, 255, 255, 1);
+	float: left;
+	display: block;
+	line-height: 0.6rem;
+	margin-left: 0.13rem;
+}
+
+.voice_time {
+	width: 100%;
+	height: auto;
+	margin-top: 1.63rem;
+}
+
+.voice_time p {
+	font-size: .55rem;
+	font-family: PingFangSC-Medium;
+	color: rgba(255, 255, 255, 1);
+	line-height: .6rem;
+	text-align: center;
+}
+
+.voice_time .fh {
+	margin-right: 0.2rem;
+	line-height: .2rem !important;
+}
+
+.voice_stauit {
+	height: 1.48rem;
+	width: 100%;
+	margin-top: 0.74rem;
+	background-image: url(../img/bl.gif);
+	background-size: 100% 100%;
+}
+
+.voice_logo {
+	position: absolute;
+	left: 50%;
+	margin-left: -0.62rem;
+	bottom: 1.63rem;
+	width: 1.24rem;
+	height: 1.24rem;
+	border-radius: 50%;
+	background-image: url(../img/yyzbz_icon@2x.png);
+	background-size: 100% 100%;
+}
+
+.voice_title {
+	width: 100%;
+	position: absolute;
+	font-size: 0.3rem;
+	font-family: PingFangSC-Light;
+	color: rgba(75, 156, 241, 1);
+	line-height: 0.3rem;
+	text-align: center;
+	bottom: 1.04rem;
+}

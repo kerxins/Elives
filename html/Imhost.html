@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" type="text/css" href="../css/init.css" />
+		<link rel="stylesheet" type="text/css" href="../css/personl.css" />
+		<link rel="stylesheet" type="text/css" href="../css/headandfoot.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_575272_ixspln7w7g8ehfr.css" />
+		<script src="../script/fontsize.js" type="text/javascript" charset="utf-8"></script>
+		<title>我是主播</title>
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body style="background-color:#F4F5F9;">
+
+		<!--setting-->
+		<div class="wrap">
+			<!--直播间介绍-->
+			<div class="head_one">
+				<div class="head_set">
+					<img src="../image/nav_icon2@2x.png" onclick="search()" />
+				</div>
+				<div class="head_set setting" onclick="setting()">
+					<img src="../image/nav_icon3@2x.png" />
+				</div>
+				<div class="head_bottom" id="host">
+					<!-- <div class="head_logo head-left">
+						<img src="../image/tmp8.png" />
+					</div>
+					<div class="head-right">
+						<h5 id="roomName">我的直播间</h5>
+						<p class="fans" id="fans">粉丝0</p>
+						<p class="introduce">直播间介绍直播间介绍直播间介绍直播间介绍直播间介绍直播间介绍直播间介绍直播间介绍直播间介绍直播间介绍</p>
+					</div> -->
+				</div>
+				<div class="newtopic">
+						<div class="topic_main" onclick="creatTopic()">
+							<span class="iconfont icon-jia"></span>
+							新建话题
+						</div>
+				</div>
+			</div>
+
+			<!--直播列表-->
+			<div class="content_one">
+				<ul class="contentone_main" id="rooms_list">
+					<!-- <li>
+						<div class="item_minlogo">
+							<img src="../image/icon_video@2x.png" />
+						</div>
+						<div class="item_logo">
+							<img src="../image/100121423.png" />
+						</div>
+						<div class="item_res">
+							<h4>张三的直播间张三的直播间张三的直播间张三的adasdadasdadasd</h4>
+							<div class="show_type">
+								<p class="show_title">即将直播</p>
+								<p class="title_right"><span>10</span>观看</p>
+							</div>
+							<div class="show_data">
+								<p class="describe">
+									<span>09-29</span><span>20:00</span>
+								</p>
+								<div class="data_right">
+									<p class="data_right_right" style="margin-right: 0;">操作</p>
+									<div class="data_right_logo">
+										<img src="../image/wszb_icon2@2x.png" />
+									</div>
+									<p class="data_right_right">操作</p>
+									<div class="data_right_logo">
+										<img src="../image/wszb_icon1@2x.png" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</li> -->
+				</ul>
+			</div>
+		</div>
+		<!--直播间操作 -->
+		<div class="mask" style="display: none;" onclick="close()">
+			<div class="mask_main">
+				<div class="mask_main_head">
+					<p class="main_title">话题<span>2017苹果秋季新品发布会</span></p>
+				</div>
+				<ul class="mask_main_ul">
+					<li onclick="prevent()">
+						<div class="list_logo">
+							<img src="../image/wszbtc_icon1@2x.png" />
+						</div>
+						<p class="mask_mintitle">
+							推送通知
+						</p>
+					</li>
+					<li onclick="prevent()">
+						<div class="list_logo">
+							<img src="../image/wszbtc_icon2@2x.png" />
+						</div>
+						<p class="mask_mintitle">
+							手动排序
+						</p>
+					</li>
+					<li onclick="prevent()">
+						<div class="list_logo">
+							<img src="../image/wszbtc_icon3@2x.png" />
+						</div>
+						<p class="mask_mintitle">
+							结束直播
+						</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script src="../script/api.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			$(".content_one").height($(".wrap").height() - $(".head_one").height() - $(".foot_nav").height());
+			hostInformation()
+		}
+		// 获取主播信息
+		function hostInformation(){
+			var url = baseUrl + '/api/user/Anchor/index';
+			// var params = { id: $api.getStorage('id')};
+			var params = { };
+				$api.ajaxsend(url,params,function(res,err){
+					// console.log(JSON.stringify(res))
+						if(res.msg==='success'){
+							var data = res.data;
+							// 房间列表
+							var rooms = data.room;
+							var fans = data.fans?data.fans:'0';
+							var signature = data.signature||'暂无签名';
+							// 主播信息设置
+							var str = '<div class="head_logo head-left">';
+									str+= '<img src="'+ data.avatar +'" />';
+									str+= '</div>';
+									str+= '<div class="head-right">';
+									str+= '<h5 id="roomName">'+data.user_nickname+'的直播间</h5>';
+									str+= '<p class="fans" id="fans">粉丝'+ fans +'</p>';
+									str+= '<p class="introduce">'+signature+'</p>';
+									str+= '</div>';
+							$api.byId('host').innerHTML = str;
+
+							// 房间列表循环
+							var stri = '';
+							rooms.forEach(function(el,index){
+									//直播状态
+									var liveState = el.live_state=='0' ? '直播即将开始' : el.live_state=='1' ? '正在直播中' : el.live_state=='2' ? '直播已结束':'';
+									// 直播时间转换
+									var liveTime;
+									var timestamp = el.create_time*1000;
+                  if (timestamp){
+										var d = new Date(timestamp);
+                     liveTime = formatDate(d);
+                  }
+									function formatDate(nows) {
+										var now=new Date(nows);
+										var year=now.getFullYear();
+										var month=now.getMonth()+1;
+										var date=now.getDate();
+										var hour=now.getHours();
+										var minute=now.getMinutes();
+										var second=now.getSeconds();
+										return month+"-"+date+" "+hour+":"+minute;
+									}
+									// 封面图片
+									var more = JSON.parse(el.more);
+									// 直播推流地址
+									stri += '<li onclick="liveDetail('+ el.id +')">';
+									stri += '<div class="item_minlogo">';
+									stri += '<img src="../image/icon_video@2x.png" />';
+									stri += '</div>';
+									stri += '<div class="item_logo">';
+									stri += '<img src="'+more.cover +'" width="100%"/>';
+									stri += '</div>';
+									stri += '<div class="item_res">';
+									stri += '<h4>'+ el.post_title +'</h4>';
+									stri += '<div class="show_type">';
+									stri += '<p class="show_title">'+ liveState +'</p>';
+									stri += '<p class="title_right"><span>'+ el.post_hits +'</span>观看</p>';
+									stri += '</div>';
+									stri += '<div class="show_data">';
+									stri += '<p class="describe">';
+									stri += '<span>'+ liveTime +'</span>';
+									stri += '</p>';
+									stri += '<div class="data_right">';
+									stri += '<p class="data_right_right" style="margin-right: 0; onclick="liveDetail('+ el.id +')"">详情</p>';
+									stri += '<div class="data_right_logo">';
+									stri += '<img src="../image/wszb_icon2@2x.png" />';
+									stri += '</div>';
+									stri += '<p class="data_right_right" onclick="liveaction('+ el.id +')">操作</p>';
+									stri += '<div class="data_right_logo">';
+									stri += '<img src="../image/wszb_icon1@2x.png" />';
+									stri += '</div>';
+									stri += '</div>';
+									stri += '</div>';
+									stri += '</div>';
+									stri += '</li>';
+							})
+							$api.byId('rooms_list').innerHTML = stri;
+						}
+				})
+		}
+		// 创建话题
+		function creatTopic(){
+			api.openWin({
+				name: 'creatTopic',
+				url: 'creatTopic.html',
+				slidBackEnabled: false
+			});
+		}
+		// 设置
+		function setting(){
+			api.openWin({
+				name: 'setting',
+				url: 'set.html',
+				slidBackEnabled: false
+			});
+		}
+		// 搜索
+		function search(){
+			api.openWin({
+				name: 'search',
+				url: 'search.html',
+				slidBackEnabled: false
+			});
+		}
+		// 直播详情
+		function liveDetail(id){
+			api.openWin({
+				name: 'room',
+				url: 'liveroom1.html',
+				slidBackEnabled: false,
+				pageParam:{
+					roomId : id
+				}
+			});
+			// var params = {
+			// 	id: $api.getStorage('id'),
+			// 	room_id: id
+			// }
+			// var url = '/api/user/Anchor/getRoomInfo'
+			// $api.ajaxsend(url,params,function(res,err){
+			// 		console.log(JSON.stringify(res))
+			// })
+		}
+		// 直播操作
+		function liveaction(id){
+				$(".mask").fadeIn();
+		}
+		//关闭操作
+		function close(){
+			$(".mask").fadeOut()
+		}
+		//冒泡事件
+		function prevent(){
+			event.stopPropagation();
+		}
+
+
+	</script>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>创建话题</title>
+    <link rel="stylesheet" type="text/css" href="../css/init.css" />
+  	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+  	<link rel="stylesheet" type="text/css" href="../css/index.css" />
+    <link rel="stylesheet" type="text/css" href="../css/headandfoot.css" />
+  	<script src="../script/fontsize.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+      html,
+      body {
+        height: 100%;
+        display: flex;
+        display: -webkit-flex;
+        display: -webkit-box;
+        flex-flow: column;
+        -webkit-flex-flow: column;
+        -webkit-box-orient: vertical;
+      }
+      section {
+        position: relative;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+        overflow: auto;
+      }
+
+      #header {
+        height: 0.88rem;
+        background-color: rgba(75, 156, 241, 1);
+        padding: 0 0.32rem;
+        text-align: center;
+        font-size: 0.36rem;
+        color: #FFF;
+        line-height: 0.88rem;
+      }
+      #footer{
+        background-color: rgba(75, 156, 241, 1);
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.36rem;
+        height: 0.98rem;
+        color: #FFF;
+      }
+      img {
+        font-size: 0;
+      }
+      .head_left {
+        float: left;
+        margin: 0;
+      }
+
+    </style>
+  </head>
+  <body>
+    <header id="header">
+      <div class="head_left" onclick="api.closeWin()"> <img src="../image/nav_icon1@2x.png" /></div>
+      <span class="title">创建话题</span>
+    </header>
+    <section>
+    </section>
+    <footer id="footer" onclick="complete()">
+      创建
+    </footer>
+    <script src="../script/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../script/api.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+      apiready = function(){
+        var header = $api.byId('header');
+        var footer = $api.byId('footer');
+        var headerH = $api.offset(header).h;
+        var footerH = $api.offset(footer).h;
+        $api.fixStatusBar(header);
+        var  baseH = 65 + 'px';
+        console.log(headerH);
+        // 打开新页面
+        api.openFrame({
+					name: 'creatTopic',
+					url: 'creatTopic.html',
+					rect: {
+						x: 0,
+						y:  baseH,
+						w: 'auto',
+						h: api.winHeight - headerH - footerH - 25+'px'
+					},
+					bounces: true
+				});
+      } 
+
+      function complete(){
+        var params = {
+          title:$api.getStorage('title'),
+          excerpt:$api.getStorage('excerpt'),
+          published_time:'',
+          cover: $(".banner").data('address')
+        }
+        console.log(JSON.stringify(params));
+      }
+    </script>
+  </body>
+</html>

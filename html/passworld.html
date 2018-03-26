@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" type="text/css" href="../css/init.css" />
+		<link rel="stylesheet" type="text/css" href="../css/headandfoot.css" />
+		<link rel="stylesheet" type="text/css" href="../css/gaiphone.css"/>
+		<script src="../script/fontsize.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../script/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<title>注册</title>
+	</head>
+
+	<body>
+		<div class="wrap">
+			<div class="head">
+				<div class="head_left">
+					<img src="../image/nav_icon1@2x.png" />
+				</div>
+				<div class="head_right"> 
+					密码设置
+				</div>
+				<div class="head_share">
+
+				</div>
+			</div>
+			<div class="content">
+				<div class="main">
+					<ul class="main_ul">
+						<li class="item">
+							
+							<input type="password" name="" id="" value="" class="item_ipt" placeholder="请输入密码"/>
+						</li>
+						<li class="item">
+							
+							<input type="password" name="" id="" value="" class="item_ipt" placeholder="请输再次入密码"/>
+						</li>
+					</ul>
+					<div class="complete">
+						提交
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".content").height($(".wrap").height() - $(".head").height() - $(".foot").height());
+		});
+	</script>
+
+</html>

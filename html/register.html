@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" type="text/css" href="../css/init.css" />
+		<link rel="stylesheet" type="text/css" href="../css/headandfoot.css" />
+		<link rel="stylesheet" type="text/css" href="../css/gaiphone.css"/>
+		<script src="../script/fontsize.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../script/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<title>注册</title>
+		<style>
+			#header{
+				height: 0.88rem;
+				background-color: rgba(75, 156, 241, 1);
+				padding: 0 0.32rem;
+				text-align: center;
+				font-size: 0.36rem;
+				color: #FFF;
+				line-height: 0.88rem;
+			}
+			img{
+				font-size: 0;
+			}
+			.head_left{
+				float: left;
+				margin-left: 0;
+			}
+			.item_ipt{
+				height: 100%;
+				margin: 0;
+				box-sizing: border-box;
+				padding: 0.35rem 0.24rem;
+			}
+			.item_logo{
+				margin: 0;
+				margin-left: 0.2rem;
+			}
+			.item{
+				display: flex;
+				align-items: center;
+			}
+			.getyzm{
+				margin-left: auto;
+				margin-right: 0.2rem;
+			}
+			.lined{
+				margin-top: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header id="header">
+				<div class="head_left" onclick="api.closeWin();" accesskey="">	<img src="../image/nav_icon1@2x.png" /></div>
+				<span class="title">注册</span>
+		</header>
+		<!-- <div class="content">   -->
+				<div class="main">
+					<ul class="main_ul">
+						<li class="item">
+							<div class="item_logo">
+								<img src="../image/wjmm_icon1@2x.png" width="100%" />
+							</div>
+							<input type="" name=" " id="" value="" class="item_ipt" placeholder="请输入旧手机号"/>
+						</li>
+						<li class="item">
+							<div class="item_logo">
+								<img src="../image/wjmm_icon1@2x.png" width="100%" />
+							</div>
+							<input type="" name="" id="" value="" class="item_ipt" placeholder="请输入新手机号"/>
+						</li>
+						<li class="item">
+							<div class="item_logo" style="width: 0.32rem;height: 0.28rem;">
+								<img src="../image/wjmm_icon12@2x.png"/ width='100%' >
+							</div>
+							<input type="" name="" id="" value="" class="item_ipt" placeholder="请输入验证码"/>
+							<div class="lined"></div>
+							<p class="getyzm">
+								获取验证码
+							</p>
+						</li>
+					</ul>
+					<div class="complete">
+						注册
+					</div>
+				</div>
+			<!-- </div> -->
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript">
+		apiready = function(){
+				var header = $api.byId('header');
+				$api.fixStatusBar(header);
+		}
+	</script>
+
+</html>
