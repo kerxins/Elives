@@ -558,7 +558,6 @@
         );
     };
     u.ajaxsend = function(url,obj,fnSuc){
-  
       api.ajax({
         url: url,
         method: 'POST',

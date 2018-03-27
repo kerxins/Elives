@@ -245,7 +245,6 @@
 </head>
 
 <body data-id="" data-mid="" data-cid="">
-
     <div class="zan container">
         <div class="zan_logo pao" onclick="paopao()">
             <img src="../image/zan.png" />
@@ -385,15 +384,30 @@
 <script src="../script/dropload.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     apiready = function() {
-        // var header = $api.byId('header');
-        // $api.fixStatusBar(header);
-        roomId = api.pageParam.roomId;
+        roomId = api.pageParam.roomId||$api.getStorage('playId');
+        console.log(roomId)
         roomInfo();
         // 视频播放
         var baseH = $('#id_test_video').height();
         obj = api.require('playModule');
         txLive = api.require('txLive');
-        // 切换content
+        pushRtmpOrVideoPlay = api.require('pushRtmpOrVideoPlay');
+        pushRtmpOrVideoPlay.setPlaysButtonVisibe({
+            "btnid" : "btnLog",
+            "show" : 0
+        });
+        ws.onopen = function() {
+            var data = {
+                type: "login",
+                name: $api.getStorage('userName'),
+                user_id: $api.getStorage('userId'),
+                room_id:roomId,
+                client_name: $api.getStorage('userName')
+            };
+            var mydata = JSON.stringify(data);
+            ws.send(mydata);
+        };
+        // 切换content 
         $('.switch').on('click', 'li', function() {
             $(this).addClass("liactive").siblings().removeClass("liactive");
             if ($(this).index() == 0) {
@@ -404,8 +418,8 @@
             $(".content_one").eq($(this).index()).show().siblings().hide();
         })
     }
-    var roomId , videoUrl , obj , txLive;
-
+    var roomId , videoUrl , obj , txLive , pushRtmpOrVideoPlay;
+    var ws = new WebSocket("WS://61.155.136.196:2346");
     // 关注
     function gz() {
         var url = baseUrl + '/api/home/live/attentionLive';
@@ -424,42 +438,7 @@
     // 点赞效果
     function paopao() {
         //需要的参数
-        var pp = {
-            pl: -20, //生成的paopao随机的居左的位置
-            color: ["ce4f6d", "ca4fce", "4f82ce", "4fce91", "ceca4f"], //随机添加的颜色
-            c: 0, //初始化颜色
-            step: 500
-        };
-        //添加元素
-        var html = '<div class="paopao iconfont" style="left: ' + pp.pl + 'px;color: #' + pp.color[pp.c] + '">&#xe60d;</div>';
-        $(".pao").append(html);
-        //获取颜色
-        pp.c++;
-        if (pp.c >= pp.color.length) {
-            pp.c = 0;
-        }
-        pp.pl = Math.round(Math.random() * 100 / 3); //随机位置
-        //执行动画
-        $(".paopao").each(function() {
-            if ($(this).index() % 2 == 0) {
-                pp.step = 50;
-            } else if ($(this).index() % 3 == 0) {
-                pp.step = 60;
-            } else {
-                pp.step = 70;
-            }
-            if (!$(this).is(":animated")) {
-                $(this).animate({ //运动
-                        top: "200px",
-                        fontSize: "45px",
-                        opacity: "0"
-                    },
-                    (500 - pp.step) * 10,
-                    function() {
-                        $(this).remove(); //清除元素
-                    })
-            }
-        });
+        console.log(1)
     }
     // 房间信息
 
@@ -481,17 +460,31 @@
                 alert('直播还没开始哦');
             }else{
 
-              var height = $('#id_test_video').height();
-              txLive.setPlayBtnsVisibility({
-                 "btnid" : "btnCacheStrategy ",
-                 "show" : 0
+            var height = $('#id_test_video').height();
+            txLive.setPlayBtnsVisibility({
+               "btnid" : "btnCacheStrategy",
+               "show" : 0
              });
-             txLive.openPlayer({
-                 x : 0,  
-                 y : 0,
-                 w : api.frameWidth,
-                 h : height,
-                 url : 'rtmp://live.hkstv.hk.lxdns.com/live/hks'
+            pushRtmpOrVideoPlay.showPlayer({
+               x : 0,
+               y : 0,
+               w : api.frameWidth,
+               h : height,
+               url : 'rtmp://live.hkstv.hk.lxdns.com/live/hks'
+            });
+            //  pushRtmpOrVideoPlay.ClickPlayButtonForId({
+            //      "btnid" : "btnPlay"
+            //  });
+            //  txLive.openPlayer({
+            //      x : 0,
+            //      y : 0,
+            //      w : api.frameWidth,
+            //      h : height,
+            //      url : 'rtmp://live.hkstv.hk.lxdns.com/live/hks'
+            //  });
+            //  txLive.startPlay();
+             api.openVideo({
+                 url: 'rtmp://live.hkstv.hk.lxdns.com/live/hks'
              });
 
               // obj.play({
@@ -499,12 +492,12 @@
               //         x: 0,
               //         y: 0,
               //         w: api.frameWidth,
-              //         h: 250
+              //         h: height
               //     },
               //     fixedOn: api.frameName,
               //     title: 'test',
-              //     // url: 'rtmp://live.hkstv.hk.lxdns.com/live/hks http://resource.apicloud.com/video/apicloud3.mp4',
-              //     url: videoUrl,
+              //     url: 'rtmp://live.hkstv.hk.lxdns.com/live/hks',
+              //     // url: videoUrl,
               //     defaultBtn: true,
               //     enableFull: false,
               //     isTopView: false
@@ -552,18 +545,8 @@
                 var data = getMyDate(res.data['anchor_room'][m]['published_time'] * 1000);
                 var more = JSON.parse(res.data['anchor_room'][m]['more'])
                 var mytype = ""
-                // switch (more['template']) {
-                //     case "1":
-                //         mytype = "<img src=\"../image/icon_sound@2x.png\" />"
-                //         break;
-                //     case "2":
-                        mytype = "<img src=\"../image/icon_video@2x.png\" />"
-                //         break;
-                //     default:
-                //         mytype = "<img src=\"../image/icon_sound@2x.png\" />"
-                // }
-              // console.log(mytype);
-                $(".contentone_main").append("<li onclick='change'>\n" +
+                mytype = "<img src=\"../image/icon_video@2x.png\" />"
+                $(".contentone_main").append("<li onclick='change("+ res.data['anchor_room'][m]['id'] +")'>\n" +
                     "<div class=\"list_minlogo\">\n" + mytype + "</div>\n" +
                     "<div class=\"list_logo\">\n" +
                     "<img src='" + more['cover'] + "'/>\n" +
@@ -661,7 +644,15 @@
             });
         }
     }
+    function change(id){
+        txLive.stopPlay();
+        roomId = id;
+        roomInfo();
+    }
 
+    function mysend(){
+
+    }
 </script>
 
 </html>

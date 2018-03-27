@@ -132,13 +132,15 @@
 	<script type="text/javascript" src="./script/api.js"></script>
 	<script type="text/javascript">
 		apiready = function() {
-			$api.setStorage('id','3')
+			$api.setStorage('userId','3')
+			$api.setStorage('userName', '宋国杰');
+
 			var header = $api.byId('header');
 			var footer = $api.byId('footer');
 			menus = $api.domAll(footer, '.foot_item');
 			headers = $api.domAll(header, '.header_item');
 			// //适配iOS 7+，Android 4.4+状态栏
-			$api.fixStatusBar(header); 
+			$api.fixStatusBar(header);
 			headerH = $api.offset(header).h;
 			footerH = $api.offset(footer).h;
 			var type = api.pageParam.name;

@@ -133,6 +133,7 @@
 					// console.log(JSON.stringify(res))
 						if(res.msg==='success'){
 							var data = res.data;
+							$api.setStorage('avatar', data.avatar);
 							// 房间列表
 							var rooms = data.room;
 							var fans = data.fans?data.fans:'0';
@@ -234,6 +235,7 @@
 		}
 		// 直播详情
 		function liveDetail(id){
+			$api.setStorage('playId',id)
 			api.openWin({
 				name: 'room',
 				url: 'liveroom1.html',
@@ -242,14 +244,6 @@
 					roomId : id
 				}
 			});
-			// var params = {
-			// 	id: $api.getStorage('id'),
-			// 	room_id: id
-			// }
-			// var url = '/api/user/Anchor/getRoomInfo'
-			// $api.ajaxsend(url,params,function(res,err){
-			// 		console.log(JSON.stringify(res))
-			// })
 		}
 		// 直播操作
 		function liveaction(id){

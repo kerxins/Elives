@@ -192,6 +192,7 @@
 	}
 	// 直播详情
 	function liveDetail(id) {
+		$api.setStorage('playId',id)
 		api.openWin({
 			name: 'room',
 			url: 'liveroom1.html',
