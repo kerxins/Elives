@@ -299,7 +299,7 @@
         <div class="mycon">
             <div class="content_one" id="content_oneactive">
                 <ul class="talk_ul" style="overflow: hidden;padding-bottom: 2rem;" id="talk_ulone">
-                    <li>
+                    <!-- <li>
                         <div class="item_logo" onclick='onimg()'>
                             <img src="../image/tmp5.png" />
                         </div>
@@ -311,7 +311,7 @@
                                 2017苹果秋季新品发布会于美国当地时间9月12日上午10点
                             </div>
                         </div>
-                    </li>
+                    </li> -->
                 </ul>
 
             </div>
@@ -384,30 +384,27 @@
 <script src="../script/dropload.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     apiready = function() {
-        roomId = api.pageParam.roomId||$api.getStorage('playId');
+        roomId = api.pageParam.roomId || $api.getStorage('playId');
         console.log(roomId)
         roomInfo();
         // 视频播放
         var baseH = $('#id_test_video').height();
         obj = api.require('playModule');
         txLive = api.require('txLive');
-        pushRtmpOrVideoPlay = api.require('pushRtmpOrVideoPlay');
-        pushRtmpOrVideoPlay.setPlaysButtonVisibe({
-            "btnid" : "btnLog",
-            "show" : 0
-        });
+
         ws.onopen = function() {
             var data = {
                 type: "login",
                 name: $api.getStorage('userName'),
                 user_id: $api.getStorage('userId'),
-                room_id:roomId,
+                room_id: roomId,
                 client_name: $api.getStorage('userName')
             };
             var mydata = JSON.stringify(data);
             ws.send(mydata);
         };
-        // 切换content 
+        messageListen();
+        // 切换content
         $('.switch').on('click', 'li', function() {
             $(this).addClass("liactive").siblings().removeClass("liactive");
             if ($(this).index() == 0) {
@@ -418,7 +415,7 @@
             $(".content_one").eq($(this).index()).show().siblings().hide();
         })
     }
-    var roomId , videoUrl , obj , txLive , pushRtmpOrVideoPlay;
+    var roomId, videoUrl, obj, txLive;
     var ws = new WebSocket("WS://61.155.136.196:2346");
     // 关注
     function gz() {
@@ -448,63 +445,52 @@
             room_id: roomId
         }
         $api.ajaxsend(url, params, function(res, ret) {
-          // 获取当前直播信息
+            // 获取当前直播信息
             // console.log(JSON.stringify(res))
             var status = res.data.live_state;
             var liveInfo = JSON.parse(res.data.pull);
             var videoUrl = res.data.video;
-            videoUrl = status=='3' ? videoUrl : liveInfo.rtmp;
+            videoUrl = status == '3' ? videoUrl : liveInfo.rtmp;
             console.log(videoUrl)
-            if(status == '0'){
+            if (status == '0') {
                 $('#header').show();
                 alert('直播还没开始哦');
-            }else{
+            } else {
 
-            var height = $('#id_test_video').height();
-            txLive.setPlayBtnsVisibility({
-               "btnid" : "btnCacheStrategy",
-               "show" : 0
-             });
-            pushRtmpOrVideoPlay.showPlayer({
-               x : 0,
-               y : 0,
-               w : api.frameWidth,
-               h : height,
-               url : 'rtmp://live.hkstv.hk.lxdns.com/live/hks'
-            });
-            //  pushRtmpOrVideoPlay.ClickPlayButtonForId({
-            //      "btnid" : "btnPlay"
-            //  });
-            //  txLive.openPlayer({
-            //      x : 0,
-            //      y : 0,
-            //      w : api.frameWidth,
-            //      h : height,
-            //      url : 'rtmp://live.hkstv.hk.lxdns.com/live/hks'
-            //  });
-            //  txLive.startPlay();
-             api.openVideo({
-                 url: 'rtmp://live.hkstv.hk.lxdns.com/live/hks'
-             });
+                var height = $('#id_test_video').height();
+                txLive.setPlayBtnsVisibility({
+                    "btnid": "btnCacheStrategy",
+                    "show": 0
+                });
 
-              // obj.play({
-              //     rect: {
-              //         x: 0,
-              //         y: 0,
-              //         w: api.frameWidth,
-              //         h: height
-              //     },
-              //     fixedOn: api.frameName,
-              //     title: 'test',
-              //     url: 'rtmp://live.hkstv.hk.lxdns.com/live/hks',
-              //     // url: videoUrl,
-              //     defaultBtn: true,
-              //     enableFull: false,
-              //     isTopView: false
-              // },
-              // function(ret, err) {
-              //     console.log(JSON.stringify(ret))
-              // });
+                //  txLive.openPlayer({
+                //      x : 0,
+                //      y : 0,
+                //      w : api.frameWidth,
+                //      h : height,
+                //      url : 'rtmp://live.hkstv.hk.lxdns.com/live/hks'
+                //  });
+                //  txLive.startPlay();
+
+
+                obj.play({
+                        rect: {
+                            x: 0,
+                            y: 0,
+                            w: api.frameWidth,
+                            h: height
+                        },
+                        fixedOn: api.frameName,
+                        title: 'test',
+                        url: 'rtmp://live.hkstv.hk.lxdns.com/live/hks',
+                        // url: videoUrl,
+                        defaultBtn: true,
+                        enableFull: false,
+                        isTopView: false
+                    },
+                    function(ret, err) {
+                        console.log(JSON.stringify(ret))
+                    });
             }
             $(".item_head_logo img").attr('src', res.data['avatar']);
             $(".item_head_res h4").html(res.data['user_nickname']);
@@ -546,7 +532,7 @@
                 var more = JSON.parse(res.data['anchor_room'][m]['more'])
                 var mytype = ""
                 mytype = "<img src=\"../image/icon_video@2x.png\" />"
-                $(".contentone_main").append("<li onclick='change("+ res.data['anchor_room'][m]['id'] +")'>\n" +
+                $(".contentone_main").append("<li onclick='change(" + res.data['anchor_room'][m]['id'] + ")'>\n" +
                     "<div class=\"list_minlogo\">\n" + mytype + "</div>\n" +
                     "<div class=\"list_logo\">\n" +
                     "<img src='" + more['cover'] + "'/>\n" +
@@ -583,19 +569,20 @@
     }
 
     //      // 上传图片
-    function showAction(){
+    function showAction() {
         api.actionSheet({
             title: '上传图片',
             cancelTitle: '取消',
-            buttons: ['拍照','从手机相册选择']
+            buttons: ['拍照', '从手机相册选择']
         }, function(ret, err) {
             if (ret) {
                 getPicture(ret.buttonIndex);
             }
         });
     }
+
     function getPicture(sourceType) {
-        if(sourceType==1){ // 拍照
+        if (sourceType == 1) { // 拍照
             api.getPicture({
                 sourceType: 'camera',
                 encodingType: 'jpg',
@@ -606,52 +593,148 @@
                 saveToPhotoAlbum: true
             }, function(ret, err) {
                 if (ret) {
-                   $('#imgUp').attr('src', ret.base64Data);
-                }else {
+                    $('#imgUp').attr('src', ret.base64Data);
+                } else {
+                    alert(JSON.stringify(err));
+                }
+            });
+        } else if (sourceType == 2) { // 从相机中选择
+            api.getPicture({
+                sourceType: 'library',
+                encodingType: 'jpg',
+                mediaValue: 'pic',
+                destinationType: 'base64',
+                quality: 50,
+                targetWidth: 750,
+                targetHeight: 750
+            }, function(ret, err) {
+                if (ret) {
+                    // $('#imgUp').attr('src', ret.base64Data)
+                    var aa = ret.base64Data;
+                    api.ajax({
+                        type: "post",
+                        url: "http://www.yuechebang.cn/Oauth/Api/index",
+                        data: {
+                            base64: aa
+                        },
+                        dataType: 'json',
+                        async: true,
+                    }, function(ret, err) {
+                        if (ret) {
+                            $('#imgUp').attr('src', aa)
+                        } else {
+                            api.alert(err);
+                        }
+                    })
+                } else {
                     alert(JSON.stringify(err));
                 }
             });
         }
-        else if(sourceType==2){ // 从相机中选择
-            api.getPicture({
-                    sourceType: 'library',
-                    encodingType: 'jpg',
-                    mediaValue: 'pic',
-                    destinationType: 'base64',
-                    quality: 50,
-                    targetWidth: 750,
-                    targetHeight: 750
-                }, function(ret, err) {
-                    if (ret) {
-                        // $('#imgUp').attr('src', ret.base64Data)
-                        var aa=ret.base64Data;
-                        api.ajax({
-                            type:"post",
-                            url:"http://www.yuechebang.cn/Oauth/Api/index",
-                            data:{base64:aa},
-                            dataType:'json',
-                            async:true,
-                        },function(ret,err){
-                            if(ret){
-                                $('#imgUp').attr('src',aa)
-                            }else{
-                                api.alert(err);
-                            }
-                        })
-                    } else {
-                        alert(JSON.stringify(err));
-                    }
-            });
-        }
     }
-    function change(id){
+
+    function change(id) {
         txLive.stopPlay();
         roomId = id;
         roomInfo();
     }
 
-    function mysend(){
+    function mysend() {
+        if ($("body").data("cid") == 1) {
 
+        } else {
+            var tet = $(".chat_ipt").val();
+            $(".chat").css("height", "1rem");
+            $(".emotion ").removeClass("actic"); 
+            var tet = $(".chat_ipt").val();
+            var onedata = {
+                type: "say",
+                to_client_id: "all",
+                userid: $api.getStorage('userId'),
+                user_name: $api.getStorage('userName'),
+                avatar: $api.getStorage('avatar'),
+                content: tet
+            };
+            var myonedata = JSON.stringify(onedata);
+            if ($(".chat_ipt").val() != "") {
+                ws.send(myonedata);
+            }
+            $(".chat_ipt").val("");
+            $(".chat_ipt").attr("placeholder", "输入聊天内容");
+        }
+    }
+    function messageListen() {
+        ws.onmessage = function(evt) {
+            var myredata = JSON.parse(evt.data);
+            if (myredata.type == "say") {
+                var icon = myredata.content
+                    // alert(icon);
+                var avatar = myredata.avatar
+
+                function replace_em(str) {
+                    str = str.replace(/\</g, '&lt;');
+                    str = str.replace(/\>/g, '&gt;');
+                    str = str.replace(/\n/g, '<br/>');
+                    str = str.replace(/\[em_([0-9]*)\]/g, '<span><img src="__TMPL__/public/assets/arclist/$1.gif" border="0" /></span>');
+                    return str;
+                }
+                $(".talk_ul").append("<li><div class='item_logo' data-tid='" + myredata.log_id + "' data-userid='" + myredata.user_id + "' onclick='onimg($(this))'><img src='" + avatar + "'/></div><div class='item_res'><p class='item_title'>" +
+                    myredata.from_client_name + "</p><div class='item_main'>" + replace_em(icon) + "</div></div></li>")
+                tobottom();
+            } else if (myredata.type == "ping") {
+                var twodata = {
+                    type: "pong"
+                };
+                var mytwodata = JSON.stringify(twodata);
+                ws.send(mytwodata);
+            } else if (myredata.type == "login") {
+                $(".fansnum").html(myredata.num)
+            } else if (myredata.type == "img") {
+                $(".more").hide()
+                var icon = myredata.content
+                var avatar = myredata.avatar
+                $(".talk_ul").append("<li><div class='item_logo' data-tid='1'  data-userid='1' onclick='onimg($(this))'><img src='" + avatar + "'/></div><div class='item_res'><p class='item_title'>" + myredata.from_client_name +
+                    "</p><div class='item_main'><img style='width:2rem;height: auto' src='" + icon + "' /></div></div></li>")
+                tobottom();
+            } else if (myredata.type == "zan") {
+                //点赞
+                $(".zan_title").html(myredata.num);
+                paopao()
+            } else if (myredata.type == "del") {
+                //删除
+                $(".talk_ul li .item_logo").each(function() {
+                    if ($(this).data("tid") == myredata.log_id) {
+                        $(this).parent().remove()
+                    }
+                })
+            } else if (myredata.type == "silent") {
+                //禁言
+                var arr = myredata.userid;
+                for (var n = 0; n < arr.length; n++) {
+                    if (arr[n] == $(".newjoin").data("muserid")) {
+                        $("body").data("cid", 1);
+                    }
+                }
+            } else if (myredata.type == "block") {
+                //拉黑
+                var arr = [1, 2, 3, 4, 5];
+                outmost: for (var n = 0; n < arr.length; n++) {
+                    if (arr[n] == $(".newjoin").data("muserid")) {
+                        toast("您已被拉黑!即将推出直播间!")
+                        setTimeout(function() {
+                            window.location = "index.html"
+                        }, 2000);
+                        break outmost
+                    }
+                }
+            }
+        };
+
+    }
+    function tobottom() {
+        var div = document.getElementById('content_oneactive');
+        var myht = div.scrollHeight;
+        $("#content_oneactive").animate({scrollTop:myht},300);
     }
 </script>
 

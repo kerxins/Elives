@@ -80,7 +80,7 @@
 					<input type="password" name="" id="" value="" class="item_ipt" placeholder="请输入密码" />
 				</li>
 			</ul>
-			<div class="complete">
+			<div class="complete" onclick="login()">
 				登录
 			</div>
 		</div>
@@ -98,7 +98,7 @@
 		    $api.fixStatusBar(header);
 		    var headerH = $api.offset(header).h;
 		}
-		//  
+		//
 		// 注册
 		function register(){
 			api.openWin({
@@ -108,6 +108,18 @@
 							type: 'register'
 					}
 			});
+		}
+		// 登录
+		function login(){
+			$api.setStorage('userId','3')
+			$api.setStorage('userName', '宋国杰');
+			api.openWin({
+			    name: '首页',
+			    url: '../index.html',
+			    pageParam: {
+			        name: 'test'
+			    }
+			});           
 		}
 		// 忘记密码
 		function forgetPassword(){
