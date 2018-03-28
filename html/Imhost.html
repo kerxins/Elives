@@ -134,6 +134,7 @@
 						if(res.msg==='success'){
 							var data = res.data;
 							$api.setStorage('avatar', data.avatar);
+							console.log(data.avatar)
 							// 房间列表
 							var rooms = data.room;
 							var fans = data.fans?data.fans:'0';
@@ -141,7 +142,7 @@
 							// 主播信息设置
 							var str = '<div class="head_logo head-left">';
 									str+= '<img src="'+ data.avatar +'" />';
-									str+= '</div>'; 
+									str+= '</div>';
 									str+= '<div class="head-right">';
 									str+= '<h5 id="roomName">'+data.user_nickname+'的直播间</h5>';
 									str+= '<p class="fans" id="fans">粉丝'+ fans +'</p>';

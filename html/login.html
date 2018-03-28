@@ -113,13 +113,16 @@
 		function login(){
 			$api.setStorage('userId','3')
 			$api.setStorage('userName', '宋国杰');
+			var avatar = 'http://wx.qlogo.cn/mmopen/vi_32/qHtz9sjox3o5FoZMUZs9tUPZufL92bMibQwr1SJzhTRZlaOAg3LIxiaPVetFc3dZbKKqDibVBQahJrKOFllpStdog/0'
+			$api.setStorage('avatar', avatar);
+
 			api.openWin({
 			    name: '首页',
 			    url: '../index.html',
 			    pageParam: {
 			        name: 'test'
 			    }
-			});           
+			});
 		}
 		// 忘记密码
 		function forgetPassword(){
