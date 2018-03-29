@@ -557,6 +557,16 @@
             }
         );
     };
+    u.formatDate = function(nows) {
+      var now=new Date(nows);
+      var year=now.getFullYear();
+      var month=now.getMonth()+1;
+      var date=now.getDate();
+      var hour=now.getHours();
+      var minute=now.getMinutes();
+      var second=now.getSeconds();
+      return year+'-'+(month>9?month:('0'+month))+"-"+(date>9?date:('0'+date))+" "+(hour>9?hour:('0'+hour))+":"+(minute>9?minute:('0'+minute));
+    };
     u.ajaxsend = function(url,obj,fnSuc){
       api.ajax({
         url: url,

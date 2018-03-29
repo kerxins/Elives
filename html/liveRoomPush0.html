@@ -384,14 +384,15 @@
 <script src="../script/dropload.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     apiready = function() {
-        roomId = api.pageParam.roomId || $api.getStorage('playId');
-        console.log(roomId)
-        roomInfo();
+        roomId = api.pageParam.name;
+        pushUrl = api.pageParam.push;
+        console.log(pushUrl)
+        onlive();
         // 视频播放
         var baseH = $('#id_test_video').height();
         obj = api.require('playModule');
         txLive = api.require('txLive');
-
+        txLive.startPush();
         ws.onopen = function() {
             var data = {
                 type: "login",
@@ -404,240 +405,25 @@
             ws.send(mydata);
         };
         messageListen();
-        // 切换content
-        $('.switch').on('click', 'li', function() {
-            $(this).addClass("liactive").siblings().removeClass("liactive");
-            if ($(this).index() == 0) {
-                $(".zan").show()
-            } else {
-                $(".zan").hide()
-            }
-            $(".content_one").eq($(this).index()).show().siblings().hide();
-        })
+
     }
-    var roomId, videoUrl, obj, txLive;
+    var roomId, videoUrl, obj, txLive , pushUrl;
     var ws = new WebSocket("WS://61.155.136.196:2346");
-    // 关注
-    function gz() {
-        var url = baseUrl + '/api/home/live/attentionLive';
-        var params = {
-            room_id: roomId
-        }
-        $api.ajaxsend(url, params, function(res, err) {
-            console.log(JSON.stringify(res))
-            if (res.data == "关注成功") {
-                $(".follow").html("已关注")
-            } else {
-                $(".follow").html("<span class=\"sp_left\">+</span><span class=\"sp_right\">关注</span>")
-            }
-        })
+    function onlive(){
+      console.log(pushUrl)
+      txLive.openPusher({
+          x : 0,
+          y : 0,
+          w : api.frameWidth,
+          h : api.frameHeight,
+          url : pushUrl
+      });
     }
-    // 点赞效果
-    function paopao() {
-        //需要的参数
-        console.log(1)
-    }
-    // 房间信息
-
-    function roomInfo() {
-        var url = baseUrl + '/api/home/live/roominfo';
-        var params = {
-            room_id: roomId
-        }
-        $api.ajaxsend(url, params, function(res, ret) {
-            // 获取当前直播信息
-            // console.log(JSON.stringify(res))
-            var status = res.data.live_state;
-            var liveInfo = JSON.parse(res.data.pull);
-            var videoUrl = res.data.video;
-            videoUrl = status == '3' ? videoUrl : liveInfo.rtmp;
-            console.log(videoUrl)
-            if (status == '0') {
-                $('#header').show();
-                alert('直播还没开始哦');
-            } else {
-
-                var height = $('#id_test_video').height();
-                var txLive = api.require('txLive');
-                 txLive.openPlayer({
-                     x : 0,
-                     y : 0,
-                     w : api.frameWidth,
-                     h : height,
-                     url : 'rtmp://live.hkstv.hk.lxdns.com/live/hks'
-                 });
-                 txLive.startPlay();
-                 txLive.setPlayBtnsVisibility({
-                     "btnid" : "btnLog",
-                     "show" : 0
-                 });  
-
-                // obj.play({
-                //         rect: {
-                //             x: 0,
-                //             y: 0,
-                //             w: api.frameWidth,
-                //             h: height
-                //         },
-                //         fixedOn: api.frameName,
-                //         title: 'test',
-                //         url: 'rtmp://live.hkstv.hk.lxdns.com/live/hks',
-                //         // url: videoUrl,
-                //         defaultBtn: true,
-                //         enableFull: false,
-                //         isTopView: false
-                //     },
-                //     function(ret, err) {
-                //         console.log(JSON.stringify(ret))
-                //     });
-            }
-            $(".item_head_logo img").attr('src', res.data['avatar']);
-            $(".item_head_res h4").html(res.data['user_nickname']);
-            $(".item_head_res .describe").html(res.data['signature']);
-            $(".tthree_h").html(res.data['post_title']);
-            $(".tthree_p").html(res.data['post_content']);
-            for (var m = 0; m < res.data['anchor_room'].length; m++) {
-                var live_state = '';
-                switch (res.data['anchor_room'][m]['live_state']) {
-                    case 1:
-                        live_state = '正在直播中'
-                        break;
-                    case 2:
-                        live_state = '直播已结束'
-                        break;
-                    default:
-                        live_state = '直播即将开始'
-                }
-
-                function getMyDate(str) {
-                    var oDate = new Date(str),
-                        oYear = oDate.getFullYear(),
-                        oMonth = oDate.getMonth() + 1,
-                        oDay = oDate.getDate(),
-                        oHour = oDate.getHours(),
-                        oMin = oDate.getMinutes(),
-                        oSen = oDate.getSeconds(),
-                        oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay) + ' ' + getzf(oHour) + ':' + getzf(oMin) + ':' + getzf(oSen); //最后拼接时间
-                    return oTime;
-                };
-                //补0操作
-                function getzf(num) {
-                    if (parseInt(num) < 10) {
-                        num = '0' + num;
-                    }
-                    return num;
-                }
-                var data = getMyDate(res.data['anchor_room'][m]['published_time'] * 1000);
-                var more = JSON.parse(res.data['anchor_room'][m]['more'])
-                var mytype = ""
-                mytype = "<img src=\"../image/icon_video@2x.png\" />"
-                $(".contentone_main").append("<li onclick='change(" + res.data['anchor_room'][m]['id'] + ")'>\n" +
-                    "<div class=\"list_minlogo\">\n" + mytype + "</div>\n" +
-                    "<div class=\"list_logo\">\n" +
-                    "<img src='" + more['cover'] + "'/>\n" +
-                    "</div>\n" +
-                    "<div class=\"list_res\">\n" +
-                    "<h4>" + res.data['anchor_room'][m]['post_title'] + "</h4>\n" +
-                    "<div class=\"show_type\">\n" +
-                    "<p class=\"show_title\">" + live_state + "</p>\n" +
-                    "<p class=\"title_right\"><span>" + res.data['anchor_room'][m]['post_hits'] + "</span>观看</p>\n" +
-                    "</div>\n" +
-                    "<div class=\"show_data\">\n" +
-                    "<p class=\"describe\">\n" +
-                    "<span>" + data + "</span>\n" +
-                    "</p>\n" +
-                    "</div>\n" +
-                    "</li>")
-            }
-        })
-    }
-    //点击头像呼出操作栏
-    function onimg(that) {
-        var mhid = that.data("tid");
-        alert(mhid)
-        var userid = that.data("userid");
-        if ($("body").data("mid") == 1) {
-            $(".newjoin").data("hid", mhid);
-            $(".newjoin").data("muserid", userid);
-            $(".mask").show()
-            $(".newjoin").show();
-        } else {
-            $(".mask").hide()
-            $(".newjoin").hide()
-        }
-    }
-
-    //      // 上传图片
-    function showAction() {
-        api.actionSheet({
-            title: '上传图片',
-            cancelTitle: '取消',
-            buttons: ['拍照', '从手机相册选择']
-        }, function(ret, err) {
-            if (ret) {
-                getPicture(ret.buttonIndex);
-            }
-        });
-    }
-
-    function getPicture(sourceType) {
-        if (sourceType == 1) { // 拍照
-            api.getPicture({
-                sourceType: 'camera',
-                encodingType: 'jpg',
-                mediaValue: 'pic',
-                allowEdit: false,
-                destinationType: 'base64',
-                quality: 90,
-                saveToPhotoAlbum: true
-            }, function(ret, err) {
-                if (ret) {
-                    $('#imgUp').attr('src', ret.base64Data);
-                } else {
-                    alert(JSON.stringify(err));
-                }
-            });
-        } else if (sourceType == 2) { // 从相机中选择
-            api.getPicture({
-                sourceType: 'library',
-                encodingType: 'jpg',
-                mediaValue: 'pic',
-                destinationType: 'base64',
-                quality: 50,
-                targetWidth: 750,
-                targetHeight: 750
-            }, function(ret, err) {
-                if (ret) {
-                    // $('#imgUp').attr('src', ret.base64Data)
-                    var aa = ret.base64Data;
-                    api.ajax({
-                        type: "post",
-                        url: "http://www.yuechebang.cn/Oauth/Api/index",
-                        data: {
-                            base64: aa
-                        },
-                        dataType: 'json',
-                        async: true,
-                    }, function(ret, err) {
-                        if (ret) {
-                            $('#imgUp').attr('src', aa)
-                        } else {
-                            api.alert(err);
-                        }
-                    })
-                } else {
-                    alert(JSON.stringify(err));
-                }
-            });
-        }
-    }
-
     function change(id) {
         txLive.stopPlay();
         roomId = id;
         roomInfo();
     }
-
     function mysend() {
         if ($("body").data("cid") == 1) {
 

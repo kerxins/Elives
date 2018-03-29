@@ -12,7 +12,7 @@
 		<script src="../script/fontsize.js" type="text/javascript" charset="utf-8"></script>
 		<title>我是主播</title>
 		<style type="text/css">
-
+			.mask{ z-index: 999;}
 		</style>
 	</head>
 
@@ -175,15 +175,15 @@
 									// 封面图片
 									var more = JSON.parse(el.more);
 									// 直播推流地址
-									stri += '<li onclick="liveDetail('+ el.id +')">';
-									stri += '<div class="item_minlogo">';
+									stri += '<li >';
+									stri += '<div class="item_minlogo" onclick="liveDetail('+ el.id +')">';
 									stri += '<img src="../image/icon_video@2x.png" />';
 									stri += '</div>';
 									stri += '<div class="item_logo">';
 									stri += '<img src="'+more.cover +'" width="100%"/>';
 									stri += '</div>';
 									stri += '<div class="item_res">';
-									stri += '<h4>'+ el.post_title +'</h4>';
+									stri += '<h4 onclick="liveDetail('+ el.id +')">'+ el.post_title +'</h4>';
 									stri += '<div class="show_type">';
 									stri += '<p class="show_title">'+ liveState +'</p>';
 									stri += '<p class="title_right"><span>'+ el.post_hits +'</span>观看</p>';
@@ -193,8 +193,8 @@
 									stri += '<span>'+ liveTime +'</span>';
 									stri += '</p>';
 									stri += '<div class="data_right">';
-									stri += '<p class="data_right_right" style="margin-right: 0; onclick="liveDetail('+ el.id +')"">详情</p>';
-									stri += '<div class="data_right_logo">';
+									stri += '<p class="data_right_right" style="margin-right: 0;" onclick="roomDetail('+ el.id +')">详情</p>';
+									stri += '<div class="data_right_logo" onclick="roomDetail('+ el.id +')">';
 									stri += '<img src="../image/wszb_icon2@2x.png" />';
 									stri += '</div>';
 									stri += '<p class="data_right_right" onclick="liveaction('+ el.id +')">操作</p>';
@@ -248,15 +248,29 @@
 		}
 		// 直播操作
 		function liveaction(id){
-				$(".mask").fadeIn();
+			console.log(id)
+				// $(".mask").fadeIn();
 		}
 		//关闭操作
 		function close(){
+			console.log(1111)
 			$(".mask").fadeOut()
 		}
 		//冒泡事件
 		function prevent(){
 			event.stopPropagation();
+		}
+		// 直播详情
+		function roomDetail(id){
+			event.stopPropagation();
+			api.openWin({
+			    name: 'detail',
+			    url: 'Topicdetails.html',
+			    pageParam: {
+			        name: id
+			    }
+			});
+
 		}
 
 
