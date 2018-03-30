@@ -36,12 +36,14 @@
 			</div>
 			<div class="btn wx" onclick='wxLogo()'>
 				微信登陆
-			</div> 
+			</div>
 		</div>
 		<script type="text/javascript" src="../script/api.js" ></script>
 		<script>
 			apiready = function(){
-
+				api.setFullScreen({
+						fullScreen: false
+				});
 			}
 			//账号登录
 			function  count(){

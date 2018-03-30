@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>播放</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+    <style>
+    </style>
+</head>
+<body>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.min.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+		//设置为全
+		api.setFullScreen({
+		    fullScreen: true
+		});
+		var pushUrl = api.pageParam.push;
+		var roomId = api.pageParam.roomId;
+		var txLive = api.require('txLive');
+		txLive.openPusher({
+				x : 0,
+				y : 0,
+				w : api.frameWidth,
+				h : api.frameHeight,
+				url : pushUrl,
+				function(ret){
+					console.log(ret)
+				}
+		});
+		// txLive.liveBtnsPerformClickById({
+		// 		"btnid" : "btnPlay"
+		// });
+		// 取消按钮btnPlay 播放,
+		// btnCameraChange 摄像头切换
+		// autofocus 自动对焦,(仅支持安卓)
+		// btnHWEncode 硬件解码,
+		// btnFaceBeauty 美颜,
+		// btnLog 日志,
+		// btnResolution 清晰度,
+		// btnScreenOrientation 横竖屏切换
+		// btnMirror 镜像(仅支持iOS)
+		txLive.setLiveBtnsVisibility({
+				"btnid" : "btnResolution",
+				"show" : 0
+		});
+		txLive.setLiveBtnsVisibility({
+				"btnid" : "btnPlay",
+				"show" : 0
+		});
+		txLive.setLiveBtnsVisibility({
+				"btnid" : "btnCameraChange",
+				"show" : 0
+		});
+		txLive.setLiveBtnsVisibility({
+				"btnid" : "autofocus",
+				"show" : 0
+		});
+		txLive.setLiveBtnsVisibility({
+				"btnid" : "btnHWEncode",
+				"show" : 0
+		});
+		txLive.setLiveBtnsVisibility({
+				"btnid" : "btnFaceBeauty",
+				"show" : 0
+		});
+		txLive.setLiveBtnsVisibility({
+				"btnid" : "btnLog",
+				"show" : 0
+		});
+
+		txLive.setLiveBtnsVisibility({
+				"btnid" : "btnScreenOrientation",
+				"show" : 0
+		});
+		txLive.setLiveBtnsVisibility({
+				"btnid" : "btnMirror",
+				"show" : 0
+		});
+		//打开遮罩层页面
+		api.openFrame({
+		    name: 'mask',
+		    url: 'publisher_mask.html',
+				pageParam: {
+							push: pushUrl,
+							roomId: roomId
+		    },
+		    rect:{
+		        x: 0,
+            y: 0,
+            w: 'auto',
+            h: 'auto'
+		    },
+		    bounces: false,
+		    // bgColor: 'rgba(0,0,0,0)',
+		    vScrollBarEnabled:false,
+		    hScrollBarEnabled:false
+		});
+		api.addEventListener({
+			name: 'play'
+		}, function(ret, err) {
+			if (ret) {
+				txLive.liveBtnsPerformClickById({
+						"btnid" : "btnPlay"
+				});
+			}
+		});
+	};
+
+</script>
+</html>

@@ -23,10 +23,10 @@
 				-webkit-flex-flow: column;
 				-webkit-box-orient: vertical;
 				background-color: #F4F5F9;
-			}  
+			}
 		#header {
 			box-sizing: border-box;
-			height: 1.3rem;
+			height: 0.88rem;
 		}
 
 		.warp {
@@ -146,7 +146,6 @@
 							}
 						})
 					},
-
 					back(){
 						api.closeWin();
 					},
@@ -162,11 +161,13 @@
 	}
 	var roomId, pushUrl;
 	function startLive(){
+		console.log(pushUrl)
 		api.openWin({
-				name: 'onlive',
-				url: 'liveRoomPush.html',
+				name: 'mask',
+				url: 'publisher.html',
 				pageParam: {
-						push: pushUrl
+						push: pushUrl,
+						roomId: roomId
 				}
 		});
 	}

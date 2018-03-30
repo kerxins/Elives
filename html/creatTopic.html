@@ -331,6 +331,14 @@
 	}
 
 	function uploader() {
+		api.showProgress({
+		    style: 'default',
+		    animationType: 'fade',
+		    title: '',
+		    text: '上传中...',
+		    modal: false
+		});
+
 		var url = baseUrl + '/api/user/Anchor/uploadCover';
 		var formData = new FormData($('#uploader')[0])
 		$.ajax({
@@ -341,6 +349,7 @@
 			processData: false,
 			contentType: false
 		}).done(function(res) {
+			api.hideProgress();
 			if(res.code===1){
 				params.cover = res.data.url;
 				document.getElementById('cover').src=res.data.url;

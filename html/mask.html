@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>播放</title>
+    <!-- <link rel="stylesheet" type="text/css" href="../css/aui.css"/> -->
+    <style>
+		.mask{
+			width: 100%;
+			height: 100%;
+			position:fixed;
+			top: 0;
+			left: 0;
+			background-color: rgba(0,0,0,0.1);
+			color: #FFF;
+			z-index: 99999999;
+		}
+    </style>
+</head>
+<body>
+	<div class="mask">12121212</div>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.min.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+		//设置为全
+		api.setFullScreen({
+		    fullScreen: true
+		});
+
+		// var pushUrl = api.pageParam.push;
+		// txLive = api.require('txLive');
+		// txLive.openPusher({
+		// 		x : 0,
+		// 		y : 0,
+		// 		w : api.frameWidth,
+		// 		h : api.frameHeight,
+		// 		url : pushUrl,
+		// 		function(ret){
+		// 			console.log(ret)
+		// 		}
+		// });
+		// txLive.liveBtnsPerformClickById({
+		// 		"btnid" : "btnPlay"
+		// });
+		// api.openFrame({
+		//     name: 'publisher_mask',
+		//     url: 'publisher.html',
+    //     pageParam: {
+		//         url: api.pageParam.push
+		//     },
+		//     rect:{
+		//         x: 0,
+    //         y: 20,
+    //         w: 'auto',
+    //         h: 'auto'
+		//     },
+		//     bounces: false,
+		//     // bgColor: 'rgba(0,0,0,0)',
+		//     vScrollBarEnabled:false,
+		//     hScrollBarEnabled:false
+		// });
+}
+</script>
+</html>

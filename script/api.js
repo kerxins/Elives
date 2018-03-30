@@ -535,6 +535,7 @@
         show(opts, time);
     };
     u.post = function(/*url,data,fnSuc,dataType*/){
+        api.showProgress();
         var argsToJson = parseArguments.apply(null, arguments);
         var json = {};
         var fnSuc = argsToJson.fnSuc;
@@ -551,8 +552,9 @@
         json.method = 'post';
         api.ajax(json,
             function(ret,err){
+              api.hideProgress();
                 if (ret) {
-                    fnSuc && fnSuc(ret);
+                    fnSuc && fnSuc(ret); 
                 }
             }
         );
@@ -568,6 +570,7 @@
       return year+'-'+(month>9?month:('0'+month))+"-"+(date>9?date:('0'+date))+" "+(hour>9?hour:('0'+hour))+":"+(minute>9?minute:('0'+minute));
     };
     u.ajaxsend = function(url,obj,fnSuc){
+      api.showProgress();
       api.ajax({
         url: url,
         method: 'POST',
@@ -578,6 +581,7 @@
           values:obj
         }
        }, function(ret,err) {
+         api.hideProgress()
          if (ret) {
              fnSuc && fnSuc(ret);
          }

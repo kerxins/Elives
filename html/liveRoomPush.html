@@ -28,37 +28,37 @@
         pushUrl = api.pageParam.push;
         console.log(pushUrl)
         var txLive = api.require('txLive');
-        playerUrl = 'rtmp://live.hkstv.hk.lxdns.com/live/hks'
-        txLive.openPlayer({
+      //   playerUrl = 'rtmp://live.hkstv.hk.lxdns.com/live/hks'
+      //   txLive.openPlayer({
+      //       x : 0,
+      //       y : 0,
+      //       w : api.frameWidth,
+      //       h : api.frameHeight,
+      //       url : 'rtmp://live.hkstv.hk.lxdns.com/live/hks'
+      //   });
+      //   txLive.setPlayBtnsVisibility({
+      //       "btnid" : "btnLog",
+      //       "show" : 0
+      //   });
+      //  txLive.startPlay();
+        txLive.openPusher({
             x : 0,
             y : 0,
             w : api.frameWidth,
             h : api.frameHeight,
-            url : 'rtmp://live.hkstv.hk.lxdns.com/live/hks'
+            url : pushUrl
         });
-        txLive.setPlayBtnsVisibility({
-            "btnid" : "btnLog",
-            "show" : 0
-        });  
-       txLive.startPlay();
-        // txLive.openPusher({
-        //     x : 0,
-        //     y : 0,
-        //     w : api.frameWidth,
-        //     h : api.frameHeight,
-        //     url : pushUrl
-        // });
-        txLive.startPush();
-
+        txLive.liveBtnsPerformClickById({
+            "btnid" : "btnPlay"
+        });
+        // txLive.startPush();
+        txLive.playBtnsPerformClickById({
+            "btnid" : "btnScreenOrientation"
+        });
         txLive.setLiveBtnsVisibility({
             "btnid" : "btnLog",
-            "show" : 0
+            "show" : 0  
         });
-
-
-
-
-
         txLive.setLiveBtnsVisibility({
             "btnid" : "btnHWEncode",
             "show" : 0
